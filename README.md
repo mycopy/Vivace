@@ -1,2 +1,2 @@
 # Vivace
-Advanced 2D Game Toolkit for Delphi
+Advanced Lua Powered 2D Game Toolkit
