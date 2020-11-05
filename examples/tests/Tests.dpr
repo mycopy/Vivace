@@ -57,7 +57,15 @@ uses
   Vivace.Speech in '..\..\source\Vivace.Speech.pas',
   Vivace.Timer in '..\..\source\Vivace.Timer.pas',
   Vivace.Engine in '..\..\source\Vivace.Engine.pas',
-  Vivace.Math in '..\..\source\Vivace.Math.pas';
+  Vivace.Math in '..\..\source\Vivace.Math.pas',
+  Vivace.Color in '..\..\source\Vivace.Color.pas',
+  Vivace.Display in '..\..\source\Vivace.Display.pas',
+  Vivace.Bitmap in '..\..\source\Vivace.Bitmap.pas',
+  Vivace.Viewport in '..\..\source\Vivace.Viewport.pas',
+  Vivace.Input in '..\..\source\Vivace.Input.pas',
+  Vivace.Game in '..\..\source\Vivace.Game.pas',
+  uTest02 in 'uTest02.pas',
+  uTest01 in 'uTest01.pas';
 
 begin
   try

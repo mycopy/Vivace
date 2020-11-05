@@ -103,6 +103,14 @@
         <DCCReference Include="..\..\source\Vivace.Timer.pas"/>
         <DCCReference Include="..\..\source\Vivace.Engine.pas"/>
         <DCCReference Include="..\..\source\Vivace.Math.pas"/>
+        <DCCReference Include="..\..\source\Vivace.Color.pas"/>
+        <DCCReference Include="..\..\source\Vivace.Display.pas"/>
+        <DCCReference Include="..\..\source\Vivace.Bitmap.pas"/>
+        <DCCReference Include="..\..\source\Vivace.Viewport.pas"/>
+        <DCCReference Include="..\..\source\Vivace.Input.pas"/>
+        <DCCReference Include="..\..\source\Vivace.Game.pas"/>
+        <DCCReference Include="uTest02.pas"/>
+        <DCCReference Include="uTest01.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
