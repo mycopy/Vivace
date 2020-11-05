@@ -102,9 +102,9 @@ end;
 
 procedure Test05;
 var
-  Lua: TLua;
+  Lua: TViLua;
 begin
-  Lua := TLua.Create;
+  Lua := TViLua.Create;
   Lua.LoadString('print("Succesfully initialized " .. vivace.luaversion)');
   FreeAndNil(Lua);
   WaitForEnter;
@@ -134,11 +134,11 @@ end;
 
 procedure RunTests;
 begin
-  //Test01;  // Vivace version
-  //Test02;  // Init Allegro
-  //Test03;  // Init Nuklear
-  //Test04;  // Init ENet
-  //Test05;  // Init Lua
+  Test01;  // Vivace version
+  Test02;  // Init Allegro
+  Test03;  // Init Nuklear
+  Test04;  // Init ENet
+  Test05;  // Init Lua
   Test06;  // Speech;
 end;
 

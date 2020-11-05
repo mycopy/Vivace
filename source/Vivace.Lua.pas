@@ -51,52 +51,48 @@ uses
   System.Rtti,
   Vivace.Common;
 
-const
-  cLuaExt = 'lua';
-  cLuacExt = 'luac';
-  cLuaAutoSetup = 'AutoSetup';
 
 type
 
-  { TLuaType }
-  TLuaType = (ltNone = -1, ltNil = 0, ltBoolean = 1, ltLightUserData = 2,
+  { TViLuaType }
+  TViLuaType = (ltNone = -1, ltNil = 0, ltBoolean = 1, ltLightUserData = 2,
     ltNumber = 3, ltString = 4, ltTable = 5, ltFunction = 6, ltUserData = 7,
     ltThread = 8);
 
-  { TLuaTable }
-  TLuaTable = (LuaTable);
+  { TViLuaTable }
+  TViLuaTable = (LuaTable);
 
-  { TLuaValueType }
-  TLuaValueType = (vtInteger, vtDouble, vtString, vtTable, vtPointer,
+  { TViLuaValueType }
+  TViLuaValueType = (vtInteger, vtDouble, vtString, vtTable, vtPointer,
     vtBoolean);
 
-  { TLuaValue }
-  TLuaValue = record
-    AsType: TLuaValueType;
-    class operator Implicit(const aValue: Integer): TLuaValue;
-    class operator Implicit(aValue: Double): TLuaValue;
-    class operator Implicit(aValue: PChar): TLuaValue;
-    class operator Implicit(aValue: TLuaTable): TLuaValue;
-    class operator Implicit(aValue: Pointer): TLuaValue;
-    class operator Implicit(aValue: Boolean): TLuaValue;
+  { TViLuaValue }
+  TViLuaValue = record
+    AsType: TViLuaValueType;
+    class operator Implicit(const aValue: Integer): TViLuaValue;
+    class operator Implicit(aValue: Double): TViLuaValue;
+    class operator Implicit(aValue: PChar): TViLuaValue;
+    class operator Implicit(aValue: TViLuaTable): TViLuaValue;
+    class operator Implicit(aValue: Pointer): TViLuaValue;
+    class operator Implicit(aValue: Boolean): TViLuaValue;
 
-    class operator Implicit(aValue: TLuaValue): Integer;
-    class operator Implicit(aValue: TLuaValue): Double;
-    class operator Implicit(aValue: TLuaValue): PChar;
-    class operator Implicit(aValue: TLuaValue): Pointer;
-    class operator Implicit(aValue: TLuaValue): Boolean;
+    class operator Implicit(aValue: TViLuaValue): Integer;
+    class operator Implicit(aValue: TViLuaValue): Double;
+    class operator Implicit(aValue: TViLuaValue): PChar;
+    class operator Implicit(aValue: TViLuaValue): Pointer;
+    class operator Implicit(aValue: TViLuaValue): Boolean;
 
     case Integer of
       0: (AsInteger: Integer);
       1: (AsNumber: Double);
       2: (AsString: PChar);
-      3: (AsTable: TLuaTable);
+      3: (AsTable: TViLuaTable);
       4: (AsPointer: Pointer);
       5: (AsBoolean: Boolean);
   end;
 
-  { ILuaContext }
-  ILuaContext = interface
+  { IViLuaContext }
+  IViLuaContext = interface
     ['{6AEC306C-45BC-4C65-A0E1-044739DED1EB}']
 
     function ArgCount: Integer;
@@ -107,25 +103,25 @@ type
 
     procedure PopStack(aCount: Integer);
 
-    function GetStackType(aIndex: Integer): TLuaType;
+    function GetStackType(aIndex: Integer): TViLuaType;
 
-    function GetValue(aType: TLuaValueType; aIndex: Integer): TLuaValue;
+    function GetValue(aType: TViLuaValueType; aIndex: Integer): TViLuaValue;
 
-    procedure PushValue(aValue: TLuaValue);
+    procedure PushValue(aValue: TViLuaValue);
 
-    procedure SetTableFieldValue(aName: string; aValue: TLuaValue;
+    procedure SetTableFieldValue(aName: string; aValue: TViLuaValue;
       aIndex: Integer);
 
-    function GetTableFieldValue(aName: string; aType: TLuaValueType;
-      aIndex: Integer): TLuaValue;
+    function GetTableFieldValue(aName: string; aType: TViLuaValueType;
+      aIndex: Integer): TViLuaValue;
 
   end;
 
-  { TLuaFunction }
-  TLuaFunction = procedure(aLua: ILuaContext) of object;
+  { TViLuaFunction }
+  TViLuaFunction = procedure(aLua: IViLuaContext) of object;
 
-  { ILua }
-  ILua = interface
+  { IViLua }
+  IViLua = interface
     ['{671FAB20-00F2-4C81-96A6-6F675A37D00B}']
 
     procedure Reset;
@@ -142,19 +138,19 @@ type
     function RoutineExist(aName: string): Boolean;
 
     function Call(aName: string;
-      const aParams: array of TLuaValue): TLuaValue;
+      const aParams: array of TViLuaValue): TViLuaValue;
 
     function VariableExist(aName: string): Boolean;
 
-    procedure SetVariable(aName: string; aValue: TLuaValue);
+    procedure SetVariable(aName: string; aValue: TViLuaValue);
 
-    function GetVariable(aName: string; aType: TLuaValueType): TLuaValue;
+    function GetVariable(aName: string; aType: TViLuaValueType): TViLuaValue;
 
     procedure RegisterRoutine(aName: string; aData: Pointer;
       aCode: Pointer); overload;
 
     procedure RegisterRoutine(aName: string;
-      aRoutine: TLuaFunction); overload;
+      aRoutine: TViLuaFunction); overload;
 
     procedure RegisterRoutines(aClass: TClass); overload;
 
@@ -169,22 +165,22 @@ type
   end;
 
   { Forwards }
-  TLua = class;
-  TLuaContext = class;
+  TViLua = class;
+  TViLuaContext = class;
 
-  { ELuaException }
-  ELuaException = class(Exception);
+  { EViLuaException }
+  EViLuaException = class(Exception);
 
-  { ELuaRuntimeException }
-  ELuaRuntimeException = class(Exception);
+  { EViLuaRuntimeException }
+  EViLuaRuntimeException = class(Exception);
 
-  { ELuaSyntaxError }
-  ELuaSyntaxError = class(Exception);
+  { EViLuaSyntaxError }
+  EViLuaSyntaxError = class(Exception);
 
-  { TLuaContext }
-  TLuaContext = class(TSingletonImplementation, ILuaContext)
+  { TViLuaContext }
+  TViLuaContext = class(TSingletonImplementation, IViLuaContext)
   protected
-    FLua: TLua;
+    FLua: TViLua;
     FPushCount: Integer;
     FPushFlag: Boolean;
 
@@ -203,7 +199,7 @@ type
       var aStackIndex: Integer; var aFieldNameIndex: Integer): Boolean;
 
   public
-    constructor Create(aLua: TLua);
+    constructor Create(aLua: TViLua);
 
     destructor Destroy; override;
 
@@ -215,32 +211,33 @@ type
 
     procedure PopStack(aCount: Integer);
 
-    function GetStackType(aIndex: Integer): TLuaType;
+    function GetStackType(aIndex: Integer): TViLuaType;
 
-    function GetValue(aType: TLuaValueType;
-      aIndex: Integer): TLuaValue; overload;
+    function GetValue(aType: TViLuaValueType;
+      aIndex: Integer): TViLuaValue; overload;
 
-    procedure PushValue(aValue: TLuaValue); overload;
+    procedure PushValue(aValue: TViLuaValue); overload;
 
-    procedure SetTableFieldValue(aName: string; aValue: TLuaValue;
+    procedure SetTableFieldValue(aName: string; aValue: TViLuaValue;
       aIndex: Integer); overload;
 
-    function GetTableFieldValue(aName: string; aType: TLuaValueType;
-      aIndex: Integer): TLuaValue; overload;
+    function GetTableFieldValue(aName: string; aType: TViLuaValueType;
+      aIndex: Integer): TViLuaValue; overload;
 
-    procedure SetTableIndexValue(aName: string; aValue: TLuaValue;
+    procedure SetTableIndexValue(aName: string; aValue: TViLuaValue;
       aIndex: Integer; aKey: Integer);
 
-    procedure GetTableIndexValue(aName: string; aType: TLuaValueType;
+    procedure GetTableIndexValue(aName: string; aType: TViLuaValueType;
       aIndex: Integer; aKey: Integer);
 
   end;
 
-  { TLua }
-  TLua = class(TSingletonImplementation, ILua)
+
+  { TViLua }
+  TViLua = class(TSingletonImplementation, IViLua)
   public
     FState: Pointer;
-    FContext: TLuaContext;
+    FContext: TViLuaContext;
     FGCStep: Integer;
 
     procedure Open;
@@ -269,17 +266,17 @@ type
 
     procedure Bundle(aInFilename: string; aOutFilename: string);
 
-    procedure PushLuaValue(aValue: TLuaValue);
+    procedure PushLuaValue(aValue: TViLuaValue);
 
-    function GetLuaValue(aIndex: Integer): TLuaValue;
+    function GetLuaValue(aIndex: Integer): TViLuaValue;
 
-    function DoCall(const aParams: array of TLuaValue): TLuaValue;
+    function DoCall(const aParams: array of TViLuaValue): TViLuaValue;
 
     procedure CleanStack;
 
     property State: Pointer read FState;
 
-    property Context: TLuaContext read FContext;
+    property Context: TViLuaContext read FContext;
 
   public
     constructor Create; virtual;
@@ -298,7 +295,7 @@ type
     procedure LoadBuffer(aData: Pointer; aSize: NativeUInt;
       aAutoRun: Boolean = True);
 
-    function Call(aName: string; const aParams: array of TLuaValue): TLuaValue;
+    function Call(aName: string; const aParams: array of TViLuaValue): TViLuaValue;
 
     function RoutineExist(aName: string): Boolean;
 
@@ -306,15 +303,15 @@ type
 
     function VariableExist(aName: string): Boolean;
 
-    procedure SetVariable(aName: string; aValue: TLuaValue);
+    procedure SetVariable(aName: string; aValue: TViLuaValue);
 
-    function GetVariable(aName: string; aType: TLuaValueType): TLuaValue;
+    function GetVariable(aName: string; aType: TViLuaValueType): TViLuaValue;
 
     procedure RegisterRoutine(aName: string; aData: Pointer;
       aCode: Pointer); overload;
 
     procedure RegisterRoutine(aName: string;
-      aRoutine: TLuaFunction); overload;
+      aRoutine: TViLuaFunction); overload;
 
     procedure RegisterRoutines(aClass: TClass); overload;
 
@@ -342,11 +339,16 @@ uses
   System.TypInfo,
   Vivace.Lua.API;
 
+const
+  cLuaExt = 'lua';
+  cLuacExt = 'luac';
+  cLuaAutoSetup = 'AutoSetup';
+
 function LuaWrapperClosure(aState: Pointer): Integer; cdecl;
 var
   method: TMethod;
-  closure: TLuaFunction absolute method;
-  lua: TLua;
+  closure: TViLuaFunction absolute method;
+  lua: TViLua;
 begin
   // get lua object
   lua := lua_touserdata(aState, lua_upvalueindex(1));
@@ -540,53 +542,53 @@ begin
 end;
 
 { --- TLuaValue ------------------------------------------------------------- }
-class operator TLuaValue.Implicit(const aValue: Integer): TLuaValue;
+class operator TViLuaValue.Implicit(const aValue: Integer): TViLuaValue;
 begin
   Result.AsType := vtInteger;
   Result.AsInteger := aValue;
 end;
 
-class operator TLuaValue.Implicit(aValue: Double): TLuaValue;
+class operator TViLuaValue.Implicit(aValue: Double): TViLuaValue;
 begin
   Result.AsType := vtDouble;
   Result.AsNumber := aValue;
 end;
 
-class operator TLuaValue.Implicit(aValue: PChar): TLuaValue;
+class operator TViLuaValue.Implicit(aValue: PChar): TViLuaValue;
 begin
   Result.AsType := vtString;
   Result.AsString := aValue;
 end;
 
-class operator TLuaValue.Implicit(aValue: TLuaTable): TLuaValue;
+class operator TViLuaValue.Implicit(aValue: TViLuaTable): TViLuaValue;
 begin
   Result.AsType := vtTable;
   Result.AsTable := aValue;
 end;
 
-class operator TLuaValue.Implicit(aValue: Pointer): TLuaValue;
+class operator TViLuaValue.Implicit(aValue: Pointer): TViLuaValue;
 begin
   Result.AsType := vtPointer;
   Result.AsPointer := aValue;
 end;
 
-class operator TLuaValue.Implicit(aValue: Boolean): TLuaValue;
+class operator TViLuaValue.Implicit(aValue: Boolean): TViLuaValue;
 begin
   Result.AsType := vtBoolean;
   Result.AsBoolean := aValue;
 end;
 
-class operator TLuaValue.Implicit(aValue: TLuaValue): Integer;
+class operator TViLuaValue.Implicit(aValue: TViLuaValue): Integer;
 begin
   Result := aValue.AsInteger;
 end;
 
-class operator TLuaValue.Implicit(aValue: TLuaValue): Double;
+class operator TViLuaValue.Implicit(aValue: TViLuaValue): Double;
 begin
   Result := aValue.AsNumber;
 end;
 
-class operator TLuaValue.Implicit(aValue: TLuaValue): PChar;
+class operator TViLuaValue.Implicit(aValue: TViLuaValue): PChar;
 const
 {$J+}
   Value: string = '';
@@ -596,24 +598,24 @@ begin
   Result := PChar(Value);
 end;
 
-class operator TLuaValue.Implicit(aValue: TLuaValue): Pointer;
+class operator TViLuaValue.Implicit(aValue: TViLuaValue): Pointer;
 begin
   Result := aValue.AsPointer
 end;
 
-class operator TLuaValue.Implicit(aValue: TLuaValue): Boolean;
+class operator TViLuaValue.Implicit(aValue: TViLuaValue): Boolean;
 begin
   Result := aValue.AsBoolean;
 end;
 
 { --- TLuaContext ----------------------------------------------------------- }
-procedure TLuaContext.Setup;
+procedure TViLuaContext.Setup;
 begin
   FPushCount := 0;
   FPushFlag := True;
 end;
 
-procedure TLuaContext.Check;
+procedure TViLuaContext.Check;
 begin
   if FPushFlag then
   begin
@@ -622,12 +624,12 @@ begin
   end;
 end;
 
-procedure TLuaContext.IncStackPushCount;
+procedure TViLuaContext.IncStackPushCount;
 begin
   Inc(FPushCount);
 end;
 
-procedure TLuaContext.Cleanup;
+procedure TViLuaContext.Cleanup;
 begin
   if FPushFlag then
   begin
@@ -635,7 +637,7 @@ begin
   end;
 end;
 
-function TLuaContext.PushTableForSet(aName: array of string; aIndex: Integer;
+function TViLuaContext.PushTableForSet(aName: array of string; aIndex: Integer;
   var aStackIndex: Integer; var aFieldNameIndex: Integer): Boolean;
 var
   Marshall: TMarshaller;
@@ -684,7 +686,7 @@ begin
   Result := True;
 end;
 
-function TLuaContext.PushTableForGet(aName: array of string; aIndex: Integer;
+function TViLuaContext.PushTableForGet(aName: array of string; aIndex: Integer;
   var aStackIndex: Integer; var aFieldNameIndex: Integer): Boolean;
 var
   Marshall: TMarshaller;
@@ -721,14 +723,14 @@ begin
   Result := True;
 end;
 
-constructor TLuaContext.Create(aLua: TLua);
+constructor TViLuaContext.Create(aLua: TViLua);
 begin
   FLua := aLua;
   FPushCount := 0;
   FPushFlag := False;
 end;
 
-destructor TLuaContext.Destroy;
+destructor TViLuaContext.Destroy;
 begin
   FLua := nil;
   FPushCount := 0;
@@ -736,34 +738,34 @@ begin
   inherited;
 end;
 
-function TLuaContext.ArgCount: Integer;
+function TViLuaContext.ArgCount: Integer;
 begin
   Result := lua_gettop(FLua.State);
 end;
 
-function TLuaContext.PushCount: Integer;
+function TViLuaContext.PushCount: Integer;
 begin
   Result := FPushCount;
 end;
 
-procedure TLuaContext.ClearStack;
+procedure TViLuaContext.ClearStack;
 begin
   lua_pop(FLua.State, lua_gettop(FLua.State));
   FPushCount := 0;
   FPushFlag := False;
 end;
 
-procedure TLuaContext.PopStack(aCount: Integer);
+procedure TViLuaContext.PopStack(aCount: Integer);
 begin
   lua_pop(FLua.State, aCount);
 end;
 
-function TLuaContext.GetStackType(aIndex: Integer): TLuaType;
+function TViLuaContext.GetStackType(aIndex: Integer): TViLuaType;
 begin
-  Result := TLuaType(lua_type(FLua.State, aIndex));
+  Result := TViLuaType(lua_type(FLua.State, aIndex));
 end;
 
-function TLuaContext.GetValue(aType: TLuaValueType; aIndex: Integer): TLuaValue;
+function TViLuaContext.GetValue(aType: TViLuaValueType; aIndex: Integer): TViLuaValue;
 const
 {$J+}
   Str: string = '';
@@ -800,7 +802,7 @@ begin
   end;
 end;
 
-procedure TLuaContext.PushValue(aValue: TLuaValue);
+procedure TViLuaContext.PushValue(aValue: TViLuaValue);
 begin
   Check;
 
@@ -840,7 +842,7 @@ begin
   IncStackPushCount;
 end;
 
-procedure TLuaContext.SetTableFieldValue(aName: string; aValue: TLuaValue;
+procedure TViLuaContext.SetTableFieldValue(aName: string; aValue: TViLuaValue;
   aIndex: Integer);
 var
   Marshall: TMarshaller;
@@ -894,8 +896,8 @@ begin
   PopStack(StackIndex);
 end;
 
-function TLuaContext.GetTableFieldValue(aName: string; aType: TLuaValueType;
-  aIndex: Integer): TLuaValue;
+function TViLuaContext.GetTableFieldValue(aName: string; aType: TViLuaValueType;
+  aIndex: Integer): TViLuaValue;
 const
 {$J+}
   Str: string = '';
@@ -948,20 +950,20 @@ begin
   PopStack(StackIndex);
 end;
 
-procedure TLuaContext.SetTableIndexValue(aName: string; aValue: TLuaValue;
+procedure TViLuaContext.SetTableIndexValue(aName: string; aValue: TViLuaValue;
   aIndex: Integer; aKey: Integer);
 begin
 
 end;
 
-procedure TLuaContext.GetTableIndexValue(aName: string; aType: TLuaValueType;
+procedure TViLuaContext.GetTableIndexValue(aName: string; aType: TViLuaValueType;
   aIndex: Integer; aKey: Integer);
 begin
 
 end;
 
-{ --- TLua ------------------------------------------------------------------ }
-procedure TLua.Open;
+{ --- TViLua ---------------------------------------------------------------- }
+procedure TViLua.Open;
 var
   ms: TMemoryStream;
   ls: TStringList;
@@ -972,12 +974,11 @@ begin
   SetGCStepSize(200);
   luaL_openlibs(FState);
   LoadBuffer(@cLoader_luac, Length(cLoader_luac));
-  FContext := TLuaContext.Create(Self);
-  //SetVariable('vivace.version', PChar(gEngine.Version));
+  FContext := TViLuaContext.Create(Self);
   SetVariable('vivace.luaversion', GetVariable('jit.version', vtString));
 end;
 
-procedure TLua.Close;
+procedure TViLua.Close;
 begin
   if FState = nil then
     Exit;
@@ -986,7 +987,7 @@ begin
   FState := nil;
 end;
 
-procedure TLua.CheckLuaError(const r: Integer);
+procedure TViLua.CheckLuaError(const r: Integer);
 var
   err: string;
 begin
@@ -1001,39 +1002,39 @@ begin
       begin
         err := lua_tostring(FState, -1);
         lua_pop(FState, 1);
-        raise ELuaRuntimeException.CreateFmt('Runtime error [%s]', [err]);
+        raise EViLuaRuntimeException.CreateFmt('Runtime error [%s]', [err]);
       end;
     // memory allocation error. For such errors, Lua does not call the error handler function.
     LUA_ERRMEM:
       begin
         err := lua_tostring(FState, -1);
         lua_pop(FState, 1);
-        raise ELuaException.CreateFmt('Memory allocation error [%s]', [err]);
+        raise EViLuaException.CreateFmt('Memory allocation error [%s]', [err]);
       end;
     // error while running the error handler function.
     LUA_ERRERR:
       begin
         err := lua_tostring(FState, -1);
         lua_pop(FState, 1);
-        raise ELuaException.CreateFmt
+        raise EViLuaException.CreateFmt
           ('Error while running the error handler function [%s]', [err]);
       end;
     LUA_ERRSYNTAX:
       begin
         err := lua_tostring(FState, -1);
         lua_pop(FState, 1);
-        raise ELuaSyntaxError.CreateFmt('Syntax Error [%s]', [err]);
+        raise EViLuaSyntaxError.CreateFmt('Syntax Error [%s]', [err]);
       end
   else
     begin
       err := lua_tostring(FState, -1);
       lua_pop(FState, 1);
-      raise ELuaException.CreateFmt('Unknown Error [%s]', [err]);
+      raise EViLuaException.CreateFmt('Unknown Error [%s]', [err]);
     end;
   end;
 end;
 
-function TLua.PushGlobalTableForSet(aName: array of string;
+function TViLua.PushGlobalTableForSet(aName: array of string;
   var aIndex: Integer): Boolean;
 var
   Marshall: TMarshaller;
@@ -1092,7 +1093,7 @@ begin
   Result := True;
 end;
 
-function TLua.PushGlobalTableForGet(aName: array of string;
+function TViLua.PushGlobalTableForGet(aName: array of string;
   var aIndex: Integer): Boolean;
 var
   Marshall: TMarshaller;
@@ -1134,7 +1135,7 @@ begin
   Result := True;
 end;
 
-procedure TLua.PushTValue(aValue: TValue);
+procedure TViLua.PushTValue(aValue: TValue);
 var
   utf8s: RawByteString;
 begin
@@ -1143,7 +1144,6 @@ begin
       tkRecord, tkInterface, tkDynArray, tkClassRef:
       begin
         lua_pushnil(FState);
-        // raise Exception.Create('Unsupported return type: ' + Value.ToString);
       end;
     tkInteger:
       lua_pushinteger(FState, aValue.AsInteger);
@@ -1175,7 +1175,7 @@ begin
   end;
 end;
 
-function TLua.CallFunction(const aParams: array of TValue): TValue;
+function TViLua.CallFunction(const aParams: array of TValue): TValue;
 var
   p: TValue;
   r: Integer;
@@ -1211,7 +1211,7 @@ begin
   end;
 end;
 
-procedure TLua.Bundle(aInFilename: string; aOutFilename: string);
+procedure TViLua.Bundle(aInFilename: string; aOutFilename: string);
 var
   err: string;
   Res: Integer;
@@ -1223,38 +1223,35 @@ begin
     Exit;
 
   LoadBuffer(@cLuabundle_luac, Length(cLuabundle_luac), False);
-  // LoadFile(PChar(GetExeBasedPath('luabundled.lua')), False);
   DoCall([PChar(aInFilename), PChar(aOutFilename)]);
-
 end;
 
 
-constructor TLua.Create;
+constructor TViLua.Create;
 begin
   inherited;
   FState := nil;
   Open;
 end;
 
-destructor TLua.Destroy;
+destructor TViLua.Destroy;
 begin
   Close;
   inherited;
 end;
 
-procedure TLua.Reset;
+procedure TViLua.Reset;
 begin
   Close;
   Open;
 end;
 
-procedure TLua.LoadFile(aFilename: string; aAutoRun: Boolean);
+procedure TViLua.LoadFile(aFilename: string; aAutoRun: Boolean);
 var
   Marshall: TMarshaller;
   err: string;
   Res: Integer;
   fname: string;
-  // spath: string;
   filename: string;
 begin
   filename := aFilename;
@@ -1278,11 +1275,11 @@ begin
   begin
     err := lua_tostring(FState, -1);
     lua_pop(FState, 1);
-    raise ELuaException.Create(err);
+    raise EViLuaException.Create(err);
   end;
 end;
 
-procedure TLua.LoadString(aData: string; aAutoRun: Boolean);
+procedure TViLua.LoadString(aData: string; aAutoRun: Boolean);
 var
   Marshall: TMarshaller;
   err: string;
@@ -1302,11 +1299,11 @@ begin
   begin
     err := lua_tostring(FState, -1);
     lua_pop(FState, 1);
-    raise ELuaException.Create(err);
+    raise EViLuaException.Create(err);
   end;
 end;
 
-procedure TLua.LoadStream(aStream: TStream; aSize: NativeUInt;
+procedure TViLua.LoadStream(aStream: TStream; aSize: NativeUInt;
   aAutoRun: Boolean);
 var
   ms: TMemoryStream;
@@ -1326,7 +1323,7 @@ begin
   end;
 end;
 
-procedure TLua.LoadBuffer(aData: Pointer; aSize: NativeUInt; aAutoRun: Boolean);
+procedure TViLua.LoadBuffer(aData: Pointer; aSize: NativeUInt; aAutoRun: Boolean);
 var
   ms: TMemoryStream;
 begin
@@ -1340,7 +1337,7 @@ begin
   FreeAndNil(ms);
 end;
 
-procedure TLua.SaveByteCode(aStream: TStream);
+procedure TViLua.SaveByteCode(aStream: TStream);
 var
   ret: Integer;
 begin
@@ -1350,13 +1347,13 @@ begin
   try
     ret := lua_dump(FState, LuaWrapperWriter, aStream);
     if ret <> 0 then
-      raise ELuaException.CreateFmt('lua_dump returned code %d', [ret]);
+      raise EViLuaException.CreateFmt('lua_dump returned code %d', [ret]);
   finally
     lua_pop(FState, 1);
   end;
 end;
 
-procedure TLua.LoadByteCode(aStream: TStream; aName: string; aAutoRun: Boolean);
+procedure TViLua.LoadByteCode(aStream: TStream; aName: string; aAutoRun: Boolean);
 var
   Res: Integer;
   err: string;
@@ -1389,12 +1386,12 @@ begin
   begin
     err := lua_tostring(FState, -1);
     lua_pop(FState, 1);
-    raise ELuaException.Create(err);
+    raise EViLuaException.Create(err);
   end;
 
 end;
 
-procedure TLua.PushLuaValue(aValue: TLuaValue);
+procedure TViLua.PushLuaValue(aValue: TViLuaValue);
 begin
   case aValue.AsType of
     vtInteger:
@@ -1431,7 +1428,7 @@ begin
   end;
 end;
 
-function TLua.GetLuaValue(aIndex: Integer): TLuaValue;
+function TViLua.GetLuaValue(aIndex: Integer): TViLuaValue;
 const
 {$J+}
   Str: string = '';
@@ -1461,14 +1458,13 @@ begin
   else
     begin
       Result := nil;
-      // ELuaException.Create('Unsupported return type');
     end;
   end;
 end;
 
-function TLua.DoCall(const aParams: array of TLuaValue): TLuaValue;
+function TViLua.DoCall(const aParams: array of TViLuaValue): TViLuaValue;
 var
-  Value: TLuaValue;
+  Value: TViLuaValue;
   Res: Integer;
 begin
   for Value in aParams do
@@ -1479,16 +1475,15 @@ begin
   Res := lua_pcall(FState, Length(aParams), 1, 0);
   CheckLuaError(Res);
   Result := GetLuaValue(-1);
-  // Lua_Pop(FState, Lua_GetTop(FState));
   CleanStack;
 end;
 
-procedure TLua.CleanStack;
+procedure TViLua.CleanStack;
 begin
   lua_pop(FState, lua_gettop(FState));
 end;
 
-function TLua.Call(aName: string; const aParams: array of TLuaValue): TLuaValue;
+function TViLua.Call(aName: string; const aParams: array of TViLuaValue): TViLuaValue;
 var
   Marshall: TMarshaller;
   Index: Integer;
@@ -1525,11 +1520,9 @@ begin
       Result := DoCall(aParams);
     end;
   end;
-
-  //CleanStack;
 end;
 
-function TLua.RoutineExist(aName: string): Boolean;
+function TViLua.RoutineExist(aName: string): Boolean;
 var
   Marshall: TMarshaller;
   Index: Integer;
@@ -1572,7 +1565,7 @@ begin
   CleanStack;
 end;
 
-procedure TLua.Run;
+procedure TViLua.Run;
 var
   err: string;
   Res: Integer;
@@ -1581,7 +1574,6 @@ begin
 
   if lua_type(FState, lua_gettop(FState)) = LUA_TFUNCTION then
   begin
-    // res := lua_pcall(FState, 0, LUA_MULTRET, lua_gettop(FState));
     Res := lua_pcall(FState, 0, LUA_MULTRET, 0);
   end;
 
@@ -1589,11 +1581,11 @@ begin
   begin
     err := lua_tostring(FState, -1);
     lua_pop(FState, 1);
-    raise ELuaException.Create(err);
+    raise EViLuaException.Create(err);
   end;
 end;
 
-function TLua.VariableExist(aName: string): Boolean;
+function TViLua.VariableExist(aName: string): Boolean;
 var
   Marshall: TMarshaller;
   Index: Integer;
@@ -1636,7 +1628,7 @@ begin
   CleanStack;
 end;
 
-function TLua.GetVariable(aName: string; aType: TLuaValueType): TLuaValue;
+function TViLua.GetVariable(aName: string; aType: TViLuaValueType): TViLuaValue;
 const
 {$J+}
   Str: string = '';
@@ -1707,11 +1699,10 @@ begin
     end;
   end;
 
-  // Lua_Pop(FState, Lua_GetTop(FState));
   CleanStack;
 end;
 
-procedure TLua.SetVariable(aName: string; aValue: TLuaValue);
+procedure TViLua.SetVariable(aName: string; aValue: TViLuaValue);
 var
   Marshall: TMarshaller;
   Index: Integer;
@@ -1788,7 +1779,7 @@ begin
   CleanStack;
 end;
 
-procedure TLua.RegisterRoutine(aName: string; aRoutine: TLuaFunction);
+procedure TViLua.RegisterRoutine(aName: string; aRoutine: TViLuaFunction);
 var
   method: TMethod;
   Marshall: TMarshaller;
@@ -1852,7 +1843,7 @@ begin
   end;
 end;
 
-procedure TLua.RegisterRoutine(aName: string; aData: Pointer; aCode: Pointer);
+procedure TViLua.RegisterRoutine(aName: string; aData: Pointer; aCode: Pointer);
 var
   Marshall: TMarshaller;
   Index: Integer;
@@ -1911,7 +1902,7 @@ begin
   end;
 end;
 
-procedure TLua.RegisterRoutines(aClass: TClass);
+procedure TViLua.RegisterRoutines(aClass: TClass);
 var
   FRttiContext: TRttiContext;
   rttiType: TRttiType;
@@ -1938,7 +1929,7 @@ begin
     begin
       if (Length(rttiParameters) = 1) and (Assigned(rttiParameters[0].ParamType)
         ) and (rttiParameters[0].ParamType.TypeKind = tkInterface) and
-        (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = ILua) then
+        (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = IViLua) then
       begin
         // call auto setup for this class
         // rttiMethod.Invoke(aClass, [Self]);
@@ -1950,7 +1941,7 @@ begin
     { Check if one parameter of type ILuaContext is present }
     if (Length(rttiParameters) = 1) and (Assigned(rttiParameters[0].ParamType))
       and (rttiParameters[0].ParamType.TypeKind = tkInterface) and
-      (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = ILuaContext) then
+      (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = IViLuaContext) then
     begin
       // push closure
       method.Code := rttiMethod.CodeAddress;
@@ -1984,7 +1975,7 @@ begin
 
 end;
 
-procedure TLua.RegisterRoutines(aObject: TObject);
+procedure TViLua.RegisterRoutines(aObject: TObject);
 var
   FRttiContext: TRttiContext;
   rttiType: TRttiType;
@@ -2010,7 +2001,7 @@ begin
     begin
       if (Length(rttiParameters) = 1) and (Assigned(rttiParameters[0].ParamType)
         ) and (rttiParameters[0].ParamType.TypeKind = tkInterface) and
-        (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = ILua) then
+        (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = IViLua) then
       begin
         // call auto setup for this class
         // rttiMethod.Invoke(aObject.ClassType, [Self]);
@@ -2022,7 +2013,7 @@ begin
     { Check if one parameter of type ILuaContext is present }
     if (Length(rttiParameters) = 1) and (Assigned(rttiParameters[0].ParamType))
       and (rttiParameters[0].ParamType.TypeKind = tkInterface) and
-      (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = ILuaContext) then
+      (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = IViLuaContext) then
     begin
       // push closure
       method.Code := rttiMethod.CodeAddress;
@@ -2049,13 +2040,12 @@ begin
     methodAutoSetup.Invoke(aObject, [Self]);
 
     // clean up stack
-    // Lua_Pop(FState, Lua_GetTop(FState));
     CleanStack;
   end;
 
 end;
 
-procedure TLua.RegisterRoutines(aTables: string; aClass: TClass;
+procedure TViLua.RegisterRoutines(aTables: string; aClass: TClass;
   aTableName: string);
 var
   FRttiContext: TRttiContext;
@@ -2125,7 +2115,7 @@ begin
     begin
       if (Length(rttiParameters) = 1) and (Assigned(rttiParameters[0].ParamType)
         ) and (rttiParameters[0].ParamType.TypeKind = tkInterface) and
-        (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = ILua) then
+        (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = IViLua) then
       begin
         // call auto setup for this class
         // rttiMethod.Invoke(aClass, [Self]);
@@ -2137,7 +2127,7 @@ begin
     { Check if one parameter of type ILuaContext is present }
     if (Length(rttiParameters) = 1) and (Assigned(rttiParameters[0].ParamType))
       and (rttiParameters[0].ParamType.TypeKind = tkInterface) and
-      (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = ILuaContext) then
+      (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = IViLuaContext) then
     begin
       // push closure
       method.Code := rttiMethod.CodeAddress;
@@ -2169,7 +2159,7 @@ begin
 
 end;
 
-procedure TLua.RegisterRoutines(aTables: string; aObject: TObject;
+procedure TViLua.RegisterRoutines(aTables: string; aObject: TObject;
   aTableName: string);
 var
   FRttiContext: TRttiContext;
@@ -2238,7 +2228,7 @@ begin
     begin
       if (Length(rttiParameters) = 1) and (Assigned(rttiParameters[0].ParamType)
         ) and (rttiParameters[0].ParamType.TypeKind = tkInterface) and
-        (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = ILua) then
+        (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = IViLua) then
       begin
         // call auto setup for this class
         // rttiMethod.Invoke(aObject.ClassType, [Self]);
@@ -2250,7 +2240,7 @@ begin
     { Check if one parameter of type ILuaContext is present }
     if (Length(rttiParameters) = 1) and (Assigned(rttiParameters[0].ParamType))
       and (rttiParameters[0].ParamType.TypeKind = tkInterface) and
-      (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = ILuaContext) then
+      (TRttiInterfaceType(rttiParameters[0].ParamType).GUID = IViLuaContext) then
     begin
       // push closure
       method.Code := rttiMethod.CodeAddress;
@@ -2266,7 +2256,6 @@ begin
   end;
 
   // clean up stack
-  // Lua_Pop(FState, Lua_GetTop(FState));
   CleanStack;
 
   // invoke autosetup?
@@ -2281,7 +2270,7 @@ begin
 
 end;
 
-procedure TLua.CompileToStream(aFilename: string; aStream: TStream;
+procedure TViLua.CompileToStream(aFilename: string; aStream: TStream;
   aCleanOutput: Boolean);
 var
   InFilename: string;
@@ -2294,7 +2283,6 @@ begin
   Bundle(InFilename, BundleFilename);
   LoadFile(PChar(BundleFilename), False);
   SaveByteCode(aStream);
-  // Lua_Pop(FState, Lua_GetTop(FState));
   CleanStack;
 
   if aCleanOutput then
@@ -2306,22 +2294,22 @@ begin
   end;
 end;
 
-procedure TLua.SetGCStepSize(aStep: Integer);
+procedure TViLua.SetGCStepSize(aStep: Integer);
 begin
   FGCStep := aStep;
 end;
 
-function TLua.GetGCStepSize: Integer;
+function TViLua.GetGCStepSize: Integer;
 begin
   Result := FGCStep;
 end;
 
-function TLua.GetGCMemoryUsed: Integer;
+function TViLua.GetGCMemoryUsed: Integer;
 begin
   Result := lua_gc(FState, LUA_GCCOUNT, 0);
 end;
 
-procedure TLua.CollectGarbage;
+procedure TViLua.CollectGarbage;
 begin
   lua_gc(FState, LUA_GCSTEP, FGCStep);
 end;
