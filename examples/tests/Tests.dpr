@@ -52,7 +52,9 @@ uses
   Vivace.Lua.API in '..\..\source\Vivace.Lua.API.pas',
   Vivace.Lua in '..\..\source\Vivace.Lua.pas',
   Vivace.Nuklear.API in '..\..\source\Vivace.Nuklear.API.pas',
-  Vivace.ENet.API in '..\..\source\Vivace.ENet.API.pas';
+  Vivace.ENet.API in '..\..\source\Vivace.ENet.API.pas',
+  Vivace.SpeechLib.TLB in '..\..\source\Vivace.SpeechLib.TLB.pas',
+  Vivace.Speech in '..\..\source\Vivace.Speech.pas';
 
 begin
   try

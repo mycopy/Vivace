@@ -60,7 +60,31 @@ const
                    cVivaceMinorVersion + '.' +
                    cVivaceReleaseType +
                    cVivaceReleaseVersion;
+
+type
+
+  { TStringArray }
+  TStringArray = array of string;
+
+  { TViBaseObject }
+  TViBaseObject = class
+  public
+    constructor Create; virtual;
+    destructor Destroy; override;
+  end;
+
 implementation
+
+{ --- TViBaseObject --------------------------------------------------------- }
+constructor TViBaseObject.Create;
+begin
+  inherited;
+end;
+
+destructor TViBaseObject.Destroy;
+begin
+  inherited;
+end;
 
 
 end.

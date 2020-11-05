@@ -48,7 +48,8 @@ uses
   System.Generics.Defaults,
   System.SysUtils,
   System.Classes,
-  System.Rtti;
+  System.Rtti,
+  Vivace.Common;
 
 const
   cLuaExt = 'lua';
@@ -56,8 +57,6 @@ const
   cLuaAutoSetup = 'AutoSetup';
 
 type
-
-  TStringArray = array of string;
 
   { TLuaType }
   TLuaType = (ltNone = -1, ltNil = 0, ltBoolean = 1, ltLightUserData = 2,

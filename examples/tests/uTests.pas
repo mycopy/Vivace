@@ -52,7 +52,8 @@ uses
   Vivace.Nuklear.API,
   Vivace.ENet.API,
   Vivace.Common,
-  Vivace.Lua;
+  Vivace.Lua,
+  Vivace.Speech;
 
 procedure WaitForEnter;
 begin
@@ -109,13 +110,39 @@ begin
   WaitForEnter;
 end;
 
+procedure Test06;
+var
+  Spk: TViSpeech;
+  I: Integer;
+  S: string;
+  Say: string;
+begin
+  Say := 'Vivace Game Toolkit';
+  Spk := TViSpeech.Create;
+  WriteLn(Format('Found %d speech voices: ', [Spk.GetVoiceCount]));
+  for I := 0 to  Spk.GetVoiceCount-1 do
+  begin
+    Spk.ChangeVoice(I);
+    S := Spk.GetVoiceAttribute(I, vaDescription);
+    WriteLn;
+    WriteLn(Format('Voice #%d: %s', [I+1, S]));
+    Spk.Speak('Vivace Game Toolkit', True);
+    WaitForEnter;
+  end;
+  FreeAndNil(Spk);
+end;
+
 procedure RunTests;
 begin
-  Test01;  // Vivace version
-  Test02;  // Init Allegro
-  Test03;  // Init Nuklear
-  Test04;  // Init ENet
-  Test05;  // Init Lua
+  //Test01;  // Vivace version
+  //Test02;  // Init Allegro
+  //Test03;  // Init Nuklear
+  //Test04;  // Init ENet
+  //Test05;  // Init Lua
+  Test06;  // Speech;
 end;
+
+initialization
+  ReportMemoryLeaksOnShutdown := True;
 
 end.
