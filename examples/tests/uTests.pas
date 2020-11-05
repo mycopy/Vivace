@@ -134,11 +134,11 @@ end;
 
 procedure RunTests;
 begin
-  Test01;  // Vivace version
-  Test02;  // Init Allegro
-  Test03;  // Init Nuklear
-  Test04;  // Init ENet
-  Test05;  // Init Lua
+  //Test01;  // Vivace version
+  //Test02;  // Init Allegro
+  //Test03;  // Init Nuklear
+  //Test04;  // Init ENet
+  //Test05;  // Init Lua
   Test06;  // Speech;
 end;
 

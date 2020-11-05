@@ -54,7 +54,10 @@ uses
   Vivace.Nuklear.API in '..\..\source\Vivace.Nuklear.API.pas',
   Vivace.ENet.API in '..\..\source\Vivace.ENet.API.pas',
   Vivace.SpeechLib.TLB in '..\..\source\Vivace.SpeechLib.TLB.pas',
-  Vivace.Speech in '..\..\source\Vivace.Speech.pas';
+  Vivace.Speech in '..\..\source\Vivace.Speech.pas',
+  Vivace.Timer in '..\..\source\Vivace.Timer.pas',
+  Vivace.Engine in '..\..\source\Vivace.Engine.pas',
+  Vivace.Math in '..\..\source\Vivace.Math.pas';
 
 begin
   try

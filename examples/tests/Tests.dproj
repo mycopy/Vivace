@@ -100,6 +100,9 @@
         <DCCReference Include="..\..\source\Vivace.ENet.API.pas"/>
         <DCCReference Include="..\..\source\Vivace.SpeechLib.TLB.pas"/>
         <DCCReference Include="..\..\source\Vivace.Speech.pas"/>
+        <DCCReference Include="..\..\source\Vivace.Timer.pas"/>
+        <DCCReference Include="..\..\source\Vivace.Engine.pas"/>
+        <DCCReference Include="..\..\source\Vivace.Math.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
