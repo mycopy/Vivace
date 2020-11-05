@@ -54,11 +54,11 @@ type
   { TViSpeech }
   TViSpeech = class;
 
-  { TSpeechVoiceAttribute }
+  { TViSpeechVoiceAttribute }
   TViSpeechVoiceAttribute = (vaDescription, vaName, vaVendor, vaAge, vaGender,
     vaLanguage, vaId);
 
-  { TSpeechWordEvent }
+  { TViSpeechWordEvent }
   TViSpeechWordEvent = procedure(aSpeech: TViSpeech; aWord: string; aText: string)
     of object;
 
@@ -158,8 +158,6 @@ begin
 end;
 
 procedure TViSpeech.FreeVoices;
-var
-  I: Integer;
 begin
   FreeAndNil(FVoiceDescList);
   FreeAndNil(FVoiceList);
@@ -203,8 +201,6 @@ var
   SOToken: ISpeechObjectToken;
 
   function GetAttr(aItem: string): string;
-  var
-    s: string;
   begin
     if aItem = 'Id' then
       Result := SOToken.Id
