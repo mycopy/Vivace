@@ -56,7 +56,6 @@ uses
   Vivace.Display in '..\..\source\lib\Vivace.Display.pas',
   Vivace.ENet.API in '..\..\source\lib\Vivace.ENet.API.pas',
   Vivace.Engine in '..\..\source\lib\Vivace.Engine.pas',
-  Vivace.Font in '..\..\source\lib\Vivace.Font.pas',
   Vivace.Game in '..\..\source\lib\Vivace.Game.pas',
   Vivace.Input in '..\..\source\lib\Vivace.Input.pas',
   Vivace.Lua.API in '..\..\source\lib\Vivace.Lua.API.pas',
@@ -66,7 +65,9 @@ uses
   Vivace.Speech in '..\..\source\lib\Vivace.Speech.pas',
   Vivace.SpeechLib.TLB in '..\..\source\lib\Vivace.SpeechLib.TLB.pas',
   Vivace.Timer in '..\..\source\lib\Vivace.Timer.pas',
-  Vivace.Viewport in '..\..\source\lib\Vivace.Viewport.pas';
+  Vivace.Viewport in '..\..\source\lib\Vivace.Viewport.pas',
+  Vivace.Text in '..\..\source\lib\Vivace.Text.pas',
+  Vivace.Font in '..\..\source\lib\Vivace.Font.pas';
 
 begin
   try

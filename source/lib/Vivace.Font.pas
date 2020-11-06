@@ -154,7 +154,7 @@ procedure TViFont.Print(aX: Single; var aY: Single; aLineSpace: Single;
   const aArgs: array of const);
 begin
   Print(aX, aY, aColor, aAlign, aMsg, aArgs);
-  aY := aY + GetLineHeight;
+  aY := aY + GetLineHeight + aLineSpace;
 end;
 
 function TViFont.GetTextWidth(const aMsg: string;

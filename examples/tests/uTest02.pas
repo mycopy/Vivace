@@ -16,13 +16,16 @@ uses
   Vivace.Game,
   Vivace.Font,
   Vivace.Math,
-  Vivace.Input;
+  Vivace.Input,
+  Vivace.Text;
 
 type
   { TMyGame }
   TMyGame = class(TViGame)
   protected
     FConsoleFont: TViFont;
+    FDefaultFont: TViFont;
+    FText: TViTextCache;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -147,6 +150,8 @@ begin
     [ViEngine.FrameRate]);
   FConsoleFont.Print(Pos.x, Pos.y, 0, VIGREEN, alLeft, 'ESC Quit',
     [ViEngine.FrameRate]);
+
+  FText.Render;
 end;
 
 procedure TMyGame.OnShowDisplay;
@@ -157,6 +162,8 @@ end;
 
 procedure TMyGame.OnShutdown;
 begin
+  FreeAndNil(FText);
+  FreeAndNil(FDefaultFont);
   FreeAndNil(FConsoleFont);
   ViEngine.Display.Close;
   inherited;
@@ -176,6 +183,17 @@ begin
   ViEngine.Mount('./data.arc');
   FConsoleFont := TViFont.Create;
   FConsoleFont.Load(12, 'arc/fonts/console.ttf');
+
+  FDefaultFont := TViFont.Create;
+  FDefaultFont.Load(18, 'arc/fonts/default.ttf');
+
+  FText := TViTextCache.Create;
+  FText.Print(FDefaultFont, 50, 50, alLeft, 1.0, 0.0, [VIWHITE, VIRED, VIBLUE,
+    VIYELLOW], 'My name is ^c3^%s^c0^', ['Jarrod Davis']);
+
+  FText.Print(FDefaultFont, 50, 50, alLeft, 1.0, 21.0, [VIWHITE, VIRED, VIBLUE,
+    VIYELLOW], 'My ^c1^name^c0^ is %s', ['Jarrod Davis']);
+
 end;
 
 procedure TMyGame.OnStartupDialogMore;
