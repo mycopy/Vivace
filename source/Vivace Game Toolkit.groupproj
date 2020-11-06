@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{597F9E60-E801-4670-ADBA-805C784ACB28}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\examples\tests\Tests.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="utils\viarc\viarc.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Tests">
+        <MSBuild Projects="..\examples\tests\Tests.dproj"/>
+    </Target>
+    <Target Name="Tests:Clean">
+        <MSBuild Projects="..\examples\tests\Tests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Tests:Make">
+        <MSBuild Projects="..\examples\tests\Tests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="viarc">
+        <MSBuild Projects="utils\viarc\viarc.dproj"/>
+    </Target>
+    <Target Name="viarc:Clean">
+        <MSBuild Projects="utils\viarc\viarc.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="viarc:Make">
+        <MSBuild Projects="utils\viarc\viarc.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Tests;viarc"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Tests:Clean;viarc:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Tests:Make;viarc:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -7,16 +7,22 @@ procedure RunTest02;
 implementation
 
 uses
+  System.SysUtils,
   Vivace.Engine,
   Vivace.Timer,
   Vivace.Speech,
   Vivace.Color,
   Vivace.Display,
-  Vivace.Game;
+  Vivace.Game,
+  Vivace.Font,
+  Vivace.Math,
+  Vivace.Input;
 
 type
   { TMyGame }
   TMyGame = class(TViGame)
+  protected
+    FConsoleFont: TViFont;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -77,7 +83,7 @@ end;
 procedure TMyGame.OnClearDisplay;
 begin
   inherited;
-  ViEngine.Display.Clear(VISKYBLUE);
+  ViEngine.Display.Clear(VIDARKGRAY);
 end;
 
 procedure TMyGame.OnCloseDisplay;
@@ -132,9 +138,15 @@ begin
 end;
 
 procedure TMyGame.OnRenderGUI;
+var
+  Pos: TViVector;
 begin
   inherited;
-
+  Pos.Assign(3,3);
+  FConsoleFont.Print(Pos.x, Pos.y, 0, VIWHITE, alLeft, 'fps %d',
+    [ViEngine.FrameRate]);
+  FConsoleFont.Print(Pos.x, Pos.y, 0, VIGREEN, alLeft, 'ESC Quit',
+    [ViEngine.FrameRate]);
 end;
 
 procedure TMyGame.OnShowDisplay;
@@ -145,8 +157,9 @@ end;
 
 procedure TMyGame.OnShutdown;
 begin
-  inherited;
+  FreeAndNil(FConsoleFont);
   ViEngine.Display.Close;
+  inherited;
 end;
 
 procedure TMyGame.OnSpeechWord(aSpeech: TViSpeech; aWord, aText: string);
@@ -159,6 +172,10 @@ procedure TMyGame.OnStartup;
 begin
   inherited;
   ViEngine.Display.Open(-1, -1, 480, 600, False, True, True, raDirect3D, 'MyGame');
+  //ViEngine.Mount('./');
+  ViEngine.Mount('./data.arc');
+  FConsoleFont := TViFont.Create;
+  FConsoleFont.Load(12, 'arc/fonts/console.ttf');
 end;
 
 procedure TMyGame.OnStartupDialogMore;
@@ -188,7 +205,8 @@ end;
 procedure TMyGame.OnUpdate(aTimer: TViTimer; aDeltaTime: Double);
 begin
   inherited;
-
+  if ViEngine.Input.KeyboardPressed(KEY_F11) then
+    ViEngine.Display.ToggleFullscreen;
 end;
 
 end.
