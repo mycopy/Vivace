@@ -70,6 +70,7 @@ type
     FMath: TViMath;
     FInput: TViInput;
     FDisplay: TViDisplay;
+    FSpeech: TViSpeech;
     FGame: TViGame;
     procedure StartupAllegro;
     procedure ShutdownAllegro;
@@ -118,6 +119,7 @@ type
 
     property Display: TViDisplay read FDisplay;
 
+    property Speech: TViSpeech read FSpeech;
 
     constructor Create; override;
 
@@ -166,7 +168,8 @@ uses
   System.SysUtils,
   VCL.Forms,
   WinApi.MMSystem,
-  Vivace.Color;
+  Vivace.Color,
+  Vivace.Video;
 
 { --- TViEngine ------------------------------------------------------------- }
 procedure TViEngine.StartupAllegro;
@@ -344,12 +347,14 @@ begin
   FMath := TViMath.Create;
   FDisplay := TViDisplay.Create;
   FInput := TViInput.Create;
+  FSpeech := TViSpeech.Create;
 end;
 
 destructor TViEngine.Destroy;
 begin
-  FreeAndNil(FDisplay);
+  FreeAndNil(FSpeech);
   FreeAndNil(FInput);
+  FreeAndNil(FDisplay);
   FreeAndNil(FMath);
   FreeAndNil(FTimer);
   ShutdownAllegro;
@@ -530,7 +535,7 @@ var
 
 begin
 
-  //FSpeech.SetWordEventHandler(OnSpeechWord);
+  FSpeech.SetWordEventHandler(OnSpeechWord);
   // FNet.SetReceiveEvent(FGame.OnNetReceive);
   // FNet.SetStatusEvent(FGame.OnNetStatus);
 
@@ -597,7 +602,6 @@ begin
                 end;
 
                 // pause speech engine
-                (*
                 if FSpeech <> nil then
                 begin
                   if FSpeech.Active then
@@ -605,7 +609,6 @@ begin
                     FSpeech.Pause;
                   end;
                 end;
-                *)
 
                 // pause audio
                 if al_is_audio_installed then
@@ -613,10 +616,8 @@ begin
                   al_set_mixer_playing(FMixer, False);
                 end;
 
-                //FAudio.Pause(True);
-
                 // pause video
-                //FVideo.SetPause(True);
+                TViVideo.PauseAll(True);
 
                 // set display not ready
                 DisplayReady := False;
@@ -628,7 +629,6 @@ begin
               ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
               begin
                 // resume speech engine
-                (*
                 if FSpeech <> nil then
                 begin
                   if FSpeech.Active then
@@ -636,7 +636,6 @@ begin
                     FSpeech.Resume;
                   end;
                 end;
-                *)
 
                 // resume audio
                 if al_is_audio_installed then
@@ -644,10 +643,8 @@ begin
                   al_set_mixer_playing(FMixer, True);
                 end;
 
-                //FAudio.Pause(False);
-
                 // resume video
-                //FVideo.SetPause(False);
+                TViVideo.PauseAll(False);
 
                 // set display ready
                 DisplayReady := True;
@@ -661,14 +658,7 @@ begin
 
             ALLEGRO_EVENT_VIDEO_FINISHED:
               begin
-                (*
-                if FVideo.GetLooping then
-                begin
-                  FVideo.Rewind;
-                  if not FVideo.GetPause then
-                    FVideo.SetPlaying(True);
-                end;
-                *)
+                TViVideo.FinishedEvent(PALLEGRO_VIDEO(FEvent.user.data1));
               end;
 
             ALLEGRO_EVENT_JOYSTICK_AXIS:
@@ -759,7 +749,7 @@ begin
     OnShutdown;
   end;
 
-  //FSpeech.Clear;
+  FSpeech.Clear;
   //FAudio.Music.Unload;
   //FAudio.Close;
   //FPhysics.Close;

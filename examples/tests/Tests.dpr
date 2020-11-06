@@ -67,7 +67,8 @@ uses
   Vivace.Timer in '..\..\source\lib\Vivace.Timer.pas',
   Vivace.Viewport in '..\..\source\lib\Vivace.Viewport.pas',
   Vivace.Text in '..\..\source\lib\Vivace.Text.pas',
-  Vivace.Font in '..\..\source\lib\Vivace.Font.pas';
+  Vivace.Font in '..\..\source\lib\Vivace.Font.pas',
+  Vivace.Video in '..\..\source\lib\Vivace.Video.pas';
 
 begin
   try

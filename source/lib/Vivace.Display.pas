@@ -102,6 +102,7 @@ type
     FRenderAPI: TRenderAPI;
     function TransformScale(aFullscreen: Boolean): Single;
     procedure LoadDefaultIcon;
+    procedure OnClose;
   public
     property Handle: PALLEGRO_DISPLAY read FHandle;
     property Trans: ALLEGRO_TRANSFORM read FTrans;
@@ -198,6 +199,7 @@ implementation
 
 uses
   System.IOUtils,
+  Vivace.Video,
   Vivace.Engine;
 
 function GetRenderAPIName(aRenderAPI: TRenderAPI): string;
@@ -369,13 +371,19 @@ begin
   Result := Boolean(FHandle <> nil);
 end;
 
+procedure TViDisplay.OnClose;
+begin
+  TViVideo.FreeAll;
+  ViEngine.OnCloseDisplay;
+end;
+
 procedure TViDisplay.Close;
 var
   wh: HWND;
 begin
   if FHandle <> nil then
   begin
-    ViEngine.OnCloseDisplay;
+    OnClose;
 
     al_unregister_event_source(ViEngine.Queue,
       al_get_display_event_source(FHandle));

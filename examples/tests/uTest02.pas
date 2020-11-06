@@ -17,7 +17,8 @@ uses
   Vivace.Font,
   Vivace.Math,
   Vivace.Input,
-  Vivace.Text;
+  Vivace.Text,
+  Vivace.Video;
 
 type
   { TMyGame }
@@ -26,6 +27,8 @@ type
     FConsoleFont: TViFont;
     FDefaultFont: TViFont;
     FText: TViTextCache;
+    FVideo1: TViVideo;
+    FVideo2: TViVideo;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -137,7 +140,8 @@ end;
 procedure TMyGame.OnRender;
 begin
   inherited;
-
+  FVideo1.Draw(50, 50);
+  FVideo2.Draw(60, 60);
 end;
 
 procedure TMyGame.OnRenderGUI;
@@ -162,6 +166,8 @@ end;
 
 procedure TMyGame.OnShutdown;
 begin
+  FreeAndNil(FVideo2);
+  FreeAndNil(FVideo1);
   FreeAndNil(FText);
   FreeAndNil(FDefaultFont);
   FreeAndNil(FConsoleFont);
@@ -172,7 +178,7 @@ end;
 procedure TMyGame.OnSpeechWord(aSpeech: TViSpeech; aWord, aText: string);
 begin
   inherited;
-
+  WriteLn(aWord);
 end;
 
 procedure TMyGame.OnStartup;
@@ -194,6 +200,15 @@ begin
   FText.Print(FDefaultFont, 50, 50, alLeft, 1.0, 21.0, [VIWHITE, VIRED, VIBLUE,
     VIYELLOW], 'My ^c1^name^c0^ is %s', ['Jarrod Davis']);
 
+  FVideo1 := TViVideo.Create;
+  FVideo1.Load('arc/videos/small.ogv');
+  FVideo1.Play(True, 1.0);
+
+  FVideo2 := TViVideo.Create;
+  FVideo2.Load('arc/videos/test.ogv');
+  FVideo2.Play(True, 1.0);
+
+  ViEngine.Speech.Speak('Vivace Game Toolkit', True);
 end;
 
 procedure TMyGame.OnStartupDialogMore;
