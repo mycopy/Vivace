@@ -68,7 +68,8 @@ uses
   Vivace.Viewport in '..\..\source\lib\Vivace.Viewport.pas',
   Vivace.Text in '..\..\source\lib\Vivace.Text.pas',
   Vivace.Font in '..\..\source\lib\Vivace.Font.pas',
-  Vivace.Video in '..\..\source\lib\Vivace.Video.pas';
+  Vivace.Video in '..\..\source\lib\Vivace.Video.pas',
+  Vivace.Audio in '..\..\source\lib\Vivace.Audio.pas';
 
 begin
   try

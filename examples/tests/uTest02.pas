@@ -18,7 +18,9 @@ uses
   Vivace.Math,
   Vivace.Input,
   Vivace.Text,
-  Vivace.Video;
+  Vivace.Video,
+  Vivace.Audio,
+  Vivace.Bitmap;
 
 type
   { TMyGame }
@@ -29,6 +31,11 @@ type
     FText: TViTextCache;
     FVideo1: TViVideo;
     FVideo2: TViVideo;
+    FMusic1: TViAudioStream;
+    FMusic2: TViAudioStream;
+    FLogo: TViBitmap;
+    FLogoAngle: Single;
+    FCenter: TViVector;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -65,7 +72,8 @@ end;
 constructor TMyGame.Create;
 begin
   inherited;
-
+  FCenter.Assign(0.5, 0.5);
+  FLogoAngle := 0;
 end;
 
 destructor TMyGame.Destroy;
@@ -140,6 +148,9 @@ end;
 procedure TMyGame.OnRender;
 begin
   inherited;
+
+  FLogo.Draw(240, 300, nil, @FCenter, nil, FLogoAngle, VIWHITE, FAlse, False);
+
   FVideo1.Draw(50, 50);
   FVideo2.Draw(60, 60);
 end;
@@ -168,6 +179,8 @@ procedure TMyGame.OnShutdown;
 begin
   FreeAndNil(FVideo2);
   FreeAndNil(FVideo1);
+  FreeAndNil(FMusic1);
+  FreeAndNil(FLogo);
   FreeAndNil(FText);
   FreeAndNil(FDefaultFont);
   FreeAndNil(FConsoleFont);
@@ -200,13 +213,21 @@ begin
   FText.Print(FDefaultFont, 50, 50, alLeft, 1.0, 21.0, [VIWHITE, VIRED, VIBLUE,
     VIYELLOW], 'My ^c1^name^c0^ is %s', ['Jarrod Davis']);
 
+  FLogo := TViBitmap.Create;
+  FLogo.Load('arc/bitmaps/sprites/vivace.png', nil);
+
+
+  FMusic1 := TViAudioStream.Create;
+  FMusic1.Load('arc/audio/music/song06.ogg');
+  FMusic1.Play(True, 1.0);
+
   FVideo1 := TViVideo.Create;
   FVideo1.Load('arc/videos/small.ogv');
-  FVideo1.Play(True, 1.0);
+  //FVideo1.Play(True, 1.0);
 
   FVideo2 := TViVideo.Create;
   FVideo2.Load('arc/videos/test.ogv');
-  FVideo2.Play(True, 1.0);
+  //FVideo2.Play(True, 1.0);
 
   ViEngine.Speech.Speak('Vivace Game Toolkit', True);
 end;
@@ -238,8 +259,12 @@ end;
 procedure TMyGame.OnUpdate(aTimer: TViTimer; aDeltaTime: Double);
 begin
   inherited;
+
   if ViEngine.Input.KeyboardPressed(KEY_F11) then
     ViEngine.Display.ToggleFullscreen;
+
+  FLogoAngle := FLogoAngle + (30.0 * aDeltaTime);
+  ViEngine.Math.ClipValue(FLogoAngle, 0, 359, True);
 end;
 
 end.
