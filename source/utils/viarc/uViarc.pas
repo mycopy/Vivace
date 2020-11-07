@@ -117,6 +117,7 @@ end;
 
 procedure TViArc.Build(aFilename: string; aPath: string);
 var
+  LPath: string;
   LFile: string;
   LFiles: TStringDynArray;
 begin
@@ -124,7 +125,8 @@ begin
   FHandle.OnProgress := OnProgress;
   if TFile.Exists(aFilename) then
     TFile.Delete(aFilename);
-  LFiles := TDirectory.GetFiles(aPath, '*', TSearchOption.soAllDirectories);
+  LPath := System.SysUtils.IncludeTrailingPathDelimiter(aPath);
+  LFiles := TDirectory.GetFiles(LPath, '*', TSearchOption.soAllDirectories);
   FHandle.Open(aFilename, zmWrite);
   for LFile in LFiles do
   begin
@@ -153,7 +155,6 @@ begin
   ShowHeader;
 
   // check correct number of params
-  (*
   if ParamCount < 2 then
   begin
     ShowUsage;
@@ -173,10 +174,9 @@ begin
     ShowUsage;
     Exit;
   end;
-  *)
 
-  FName := 'Data.arc';
-  Dir := 'arc';
+  //FName := 'Data.arc';
+  //Dir := 'arc';
 
   WriteLn(Format('Creating %s...', [FName]));
 

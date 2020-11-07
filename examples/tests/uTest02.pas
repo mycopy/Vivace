@@ -36,6 +36,8 @@ type
     FLogo: TViBitmap;
     FLogoAngle: Single;
     FCenter: TViVector;
+    FSamples: array[ 0..8 ] of TViAudioSample;
+    FLoopSampleId: TViAudioSampleId;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -176,10 +178,15 @@ begin
 end;
 
 procedure TMyGame.OnShutdown;
+var
+  I: Integer;
 begin
   FreeAndNil(FVideo2);
   FreeAndNil(FVideo1);
   FreeAndNil(FMusic1);
+  ViEngine.Audio.SampleStopAll;
+  for I := 0 to 8 do
+    FreeAndNil(FSamples[I]);
   FreeAndNil(FLogo);
   FreeAndNil(FText);
   FreeAndNil(FDefaultFont);
@@ -195,6 +202,8 @@ begin
 end;
 
 procedure TMyGame.OnStartup;
+var
+  I: Integer;
 begin
   inherited;
   ViEngine.Display.Open(-1, -1, 480, 600, False, True, True, raDirect3D, 'MyGame');
@@ -215,6 +224,18 @@ begin
 
   FLogo := TViBitmap.Create;
   FLogo.Load('arc/bitmaps/sprites/vivace.png', nil);
+
+  for I := 0 to 5 do
+  begin
+    FSamples[I] := TViAudioSample.Create;
+    FSamples[I].Load(Format('arc/audio/sfx/samp%d.ogg', [I]));
+  end;
+  FSamples[6] := TViAudioSample.Create;
+  FSamples[6].Load('arc/audio/sfx/weapon_player.ogg');
+  FSamples[7] := TViAudioSample.Create;
+  FSamples[7].Load('arc/audio/sfx/thunder.ogg');
+  FSamples[8] := TViAudioSample.Create;
+  FSamples[8].Load('arc/audio/sfx/digthis.ogg');
 
 
   FMusic1 := TViAudioStream.Create;
@@ -262,6 +283,28 @@ begin
 
   if ViEngine.Input.KeyboardPressed(KEY_F11) then
     ViEngine.Display.ToggleFullscreen;
+
+  if ViEngine.Input.KeyboardPressed(KEY_0) then
+    FSamples[0].Play(1.0, 0, 1, False, nil);
+  if ViEngine.Input.KeyboardPressed(KEY_1) then
+    FSamples[1].Play(1.0, 0, 1, False, nil);
+  if ViEngine.Input.KeyboardPressed(KEY_2) then
+    FSamples[2].Play(1.0, 0, 1, False, nil);
+  if ViEngine.Input.KeyboardPressed(KEY_3) then
+    FSamples[3].Play(1.0, 0, 1, False, nil);
+  if ViEngine.Input.KeyboardPressed(KEY_4) then
+    FSamples[4].Play(1.0, 0, 1, True, @FLoopSampleId);
+  if ViEngine.Input.KeyboardPressed(KEY_5) then
+    FSamples[5].Play(1.0, 0, 1, False, nil);
+  if ViEngine.Input.KeyboardPressed(KEY_6) then
+    FSamples[6].Play(1.0, 0, 1, False, nil);
+  if ViEngine.Input.KeyboardPressed(KEY_7) then
+    FSamples[7].Play(1.0, 0, 1, False, nil);
+  if ViEngine.Input.KeyboardPressed(KEY_8) then
+    FSamples[8].Play(1.0, 0, 1, False, nil);
+  if ViEngine.Input.KeyboardPressed(KEY_9) then
+    ViEngine.Audio.SampleStop(FLoopSampleId);
+
 
   FLogoAngle := FLogoAngle + (30.0 * aDeltaTime);
   ViEngine.Math.ClipValue(FLogoAngle, 0, 359, True);

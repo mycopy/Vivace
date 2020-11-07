@@ -52,19 +52,36 @@ const
   MAX_AUDIO_CHANNELS = 16;
 
 type
+  { TViAudioSampleId }
+  PViAudioSampleId = ^TViAudioSampleId;
+  TViAudioSampleId = record
+    Index: Integer;
+    Id: Integer;
+  end;
+
 
   { TViAudio }
   TViAudio = class(TViBaseObject)
   public
     constructor Create; override;
     destructor Destroy; override;
+    procedure SampleStopAll;
+    procedure SampleStop(aId: TViAudioSampleId);
+    function SamplePlaying(aId: TViAudioSampleId): Boolean;
   end;
 
   { TViAudioSample }
   TViAudioSample = class(TViBaseObject)
+  protected
+    FHandle: PALLEGRO_SAMPLE;
+    //FId: ALLEGRO_SAMPLE_ID;
   public
     constructor Create; override;
     destructor Destroy; override;
+    procedure Load(aFilename: string);
+    procedure Unload;
+    function Play(aGain: Single; aPan: Single; aSpeed: Single;
+      aLoop: Boolean; aId: PViAudioSampleId): TViAudioSampleId;
   end;
 
   { TViAudioStream }
@@ -107,16 +124,94 @@ begin
   inherited;
 end;
 
+procedure TViAudio.SampleStopAll;
+begin
+  al_stop_samples;
+end;
+
+function TViAudio.SamplePlaying(aId: TViAudioSampleId): Boolean;
+var
+  instance: PALLEGRO_SAMPLE_INSTANCE;
+  Id: ALLEGRO_SAMPLE_ID absolute aId;
+begin
+  Result := False;
+
+  instance := al_lock_sample_id(@Id);
+  if instance <> nil then
+  begin
+    Result := al_get_sample_instance_playing(instance);
+    al_unlock_sample_id(@Id);
+  end;
+end;
+
+procedure TViAudio.SampleStop(aId: TViAudioSampleId);
+var
+  Id: ALLEGRO_SAMPLE_ID absolute aId;
+begin
+  if SamplePlaying(aId) then
+    al_stop_sample(@Id);
+end;
+
 { ---- TViAudioSample ------------------------------------------------------- }
 constructor TViAudioSample.Create;
 begin
   inherited;
+  FHandle := nil;
 end;
 
 destructor TViAudioSample.Destroy;
 begin
+  Unload;
   inherited;
 end;
+
+procedure TViAudioSample.Unload;
+begin
+  if FHandle <> nil then
+  begin
+    //if Playing then al_stop_sample(@FId);
+    al_destroy_sample(FHandle);
+    FHandle := nil;
+  end;
+end;
+
+procedure TViAudioSample.Load(aFilename: string);
+begin
+  if aFilename.IsEmpty then
+    Exit;
+  FHandle := al_load_sample(PAnsiChar(AnsiString(aFilename)));
+end;
+
+function TViAudioSample.Play(aGain: Single; aPan: Single;
+  aSpeed: Single; aLoop: Boolean; aId: PViAudioSampleId): TViAudioSampleId;
+var
+  Mode: ALLEGRO_PLAYMODE;
+  Id: ALLEGRO_SAMPLE_ID;
+begin
+  if FHandle = nil then Exit;
+
+  // stop current sample
+  if aId <> nil then
+  begin
+    ViEngine.Audio.SampleStop(aId^);
+  end;
+
+  if aLoop then
+    Mode := ALLEGRO_PLAYMODE_LOOP
+  else
+    Mode := ALLEGRO_PLAYMODE_ONCE;
+
+  al_play_sample(FHandle, aGain, aPan, aSpeed, mode, @Id);
+  Result.Index := Id._index;
+  Result.Id := Id._id;
+
+  if aId <> nil then
+  begin
+    aId.Index := Result.Index;
+    aId.Id := Result.Id;
+  end;
+end;
+
 
 { --- TViAudioStream -------------------------------------------------------- }
 function  TViAudioStream.GetLooping: Boolean;
@@ -191,8 +286,6 @@ begin
 end;
 
 procedure TViAudioStream.Load(aFilename: string);
-var
-  fn: string;
 begin
   if aFilename.IsEmpty then
     Exit;

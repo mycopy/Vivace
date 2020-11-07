@@ -3083,11 +3083,11 @@ procedure al_destroy_sample(spl: PALLEGRO_SAMPLE); cdecl;
 
 // ALLEGRO_SAMPLE_INSTANCE* al_lock_sample_id(ALLEGRO_SAMPLE_ID *spl_id)
 function al_lock_sample_id(spl_id: PALLEGRO_SAMPLE_ID)
-  : PALLEGRO_SAMPLE_INSTANCE;
+  : PALLEGRO_SAMPLE_INSTANCE;  cdecl;
   external cDllName name _PU + 'al_lock_sample_id';
 
 // void al_unlock_sample_id(ALLEGRO_SAMPLE_ID *spl_id)
-procedure al_unlock_sample_id(spl_id: PALLEGRO_SAMPLE_ID);
+procedure al_unlock_sample_id(spl_id: PALLEGRO_SAMPLE_ID); cdecl;
   external cDllName name _PU + 'al_unlock_sample_id';
 
 function al_create_sample_instance(data: PALLEGRO_SAMPLE)

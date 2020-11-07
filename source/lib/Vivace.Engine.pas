@@ -50,6 +50,7 @@ uses
   Vivace.Display,
   Vivace.Input,
   Vivace.Speech,
+  Vivace.Audio,
   Vivace.Game;
 
 type
@@ -71,6 +72,7 @@ type
     FInput: TViInput;
     FDisplay: TViDisplay;
     FSpeech: TViSpeech;
+    FAudio: TViAudio;
     FGame: TViGame;
     procedure StartupAllegro;
     procedure ShutdownAllegro;
@@ -120,6 +122,8 @@ type
     property Display: TViDisplay read FDisplay;
 
     property Speech: TViSpeech read FSpeech;
+
+    property Audio: TViAudio read FAudio;
 
     constructor Create; override;
 
@@ -216,7 +220,7 @@ begin
       ALLEGRO_CHANNEL_CONF_2);
     al_set_default_mixer(FMixer);
     al_attach_mixer_to_voice(FMixer, FVoice);
-    al_reserve_samples(ALLEGRO_MAX_CHANNELS);
+    al_reserve_samples(MAX_AUDIO_CHANNELS);
   end;
 
   // init physfs
@@ -348,10 +352,12 @@ begin
   FDisplay := TViDisplay.Create;
   FInput := TViInput.Create;
   FSpeech := TViSpeech.Create;
+  FAudio := TViAudio.Create;
 end;
 
 destructor TViEngine.Destroy;
 begin
+  FreeAndNil(FAudio);
   FreeAndNil(FSpeech);
   FreeAndNil(FInput);
   FreeAndNil(FDisplay);
