@@ -69,7 +69,12 @@ uses
   Vivace.Text in '..\..\source\lib\Vivace.Text.pas',
   Vivace.Font in '..\..\source\lib\Vivace.Font.pas',
   Vivace.Video in '..\..\source\lib\Vivace.Video.pas',
-  Vivace.Audio in '..\..\source\lib\Vivace.Audio.pas';
+  Vivace.Audio in '..\..\source\lib\Vivace.Audio.pas',
+  Vivace.OS in '..\..\source\lib\Vivace.OS.pas',
+  Vivace.Screenshake in '..\..\source\lib\Vivace.Screenshake.pas',
+  Vivace.Screenshot in '..\..\source\lib\Vivace.Screenshot.pas',
+  Vivace.Utils in '..\..\source\lib\Vivace.Utils.pas',
+  Vivace.Starfield in '..\..\source\lib\Vivace.Starfield.pas';
 
 begin
   try

@@ -102,7 +102,6 @@ implementation
 uses
   System.Generics.Collections,
   System.SysUtils,
-  System.IOUtils,
   Vivace.Engine;
 
 var
@@ -213,9 +212,9 @@ begin
   if aFilename.IsEmpty then
     Exit;
 
-  Unload;
-  if TFile.Exists(aFilename) then
+  if ViEngine.OS.FileExists(aFilename) then
   begin
+    Unload;
     InitAudio;
     FHandle := al_open_video(PAnsiChar(AnsiString(aFilename)));
     if FHandle <> nil then

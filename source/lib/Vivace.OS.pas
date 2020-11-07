@@ -38,35 +38,61 @@
 
 ============================================================================== }
 
-unit Vivace.Utils;
+unit Vivace.OS;
 
 {$I Vivace.Defines.inc}
 
 interface
 
+uses
+  Vivace.Common;
+
+type
+
+  { TViOS }
+  TViOS = class(TViBaseObject)
+  public
+    constructor Create; override;
+    destructor Destroy; override;
+    function FileExists(aFilename: string): Boolean;
+    function FileCount(aPath: string; aSearchMask: string): Integer;
+  end;
 
 implementation
 
 uses
-  WinApi.Windows;
+  System.SysUtils,
+  System.IOUtils,
+  Vivace.Allegro.API;
 
-{ =========================================================================== }
-var
-  CodePage: Cardinal;
 
-initialization
-
+{ --- TViOS ----------------------------------------------------------------- }
+constructor TViOS.Create;
 begin
-  ReportMemoryLeaksOnShutdown := True;
-
-  CodePage := GetConsoleOutputCP;
-  SetConsoleOutputCP(WinApi.Windows.CP_UTF8);
+  inherited;
 end;
 
-finalization
-
+destructor TViOS.Destroy;
 begin
-  SetConsoleOutputCP(CodePage);
+  inherited;
+end;
+
+function TViOS.FileExists(aFilename: string): Boolean;
+begin
+  Result := al_filename_exists(PAnsiChar(AnsiString(aFilename)));
+end;
+
+function TViOS.FileCount(aPath: string; aSearchMask: string): Integer;
+var
+  SearchRec: TSearchRec;
+begin
+  Result := 0;
+  aPath := TPath.Combine(aPath, aSearchMask);
+  if FindFirst(aPath, faAnyFile, SearchRec) = 0 then
+    repeat
+      if SearchRec.Attr <> faDirectory then
+        Inc(Result);
+    until FindNext(SearchRec) <> 0;
 end;
 
 end.

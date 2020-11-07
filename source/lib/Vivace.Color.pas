@@ -59,19 +59,19 @@ type
     Alpha: Single;
   end;
 
-function ViMakeColor(aRed: Byte; aGreen: Byte; aBlue: Byte; aAlpha: Byte)
+function ViColorMake(aRed: Byte; aGreen: Byte; aBlue: Byte; aAlpha: Byte)
   : TViColor; overload; inline;
 
-function ViMakeColor(aRed: Single; aGreen: Single; aBlue: Single; aAlpha: Single)
+function ViColorMake(aRed: Single; aGreen: Single; aBlue: Single; aAlpha: Single)
   : TViColor; overload; inline;
 
-function ViFadeColor(aTo: TViColor; aFrom: TViColor; aPos: Single): TViColor; inline;
+function ViColorFade(aTo: TViColor; aFrom: TViColor; aPos: Single): TViColor; inline;
 
 function ViColorEqual(aColor1: TViColor; aColor2: TViColor): Boolean; inline;
 
-function ViToAlColor(aColor: TViColor): ALLEGRO_COLOR; inline;
+function ViColorToAlColor(aColor: TViColor): ALLEGRO_COLOR; inline;
 
-function ViFromAlColor(aColor: ALLEGRO_COLOR): TViColor; inline;
+function ViColorFromAlColor(aColor: ALLEGRO_COLOR): TViColor; inline;
 
 {$REGION 'Common Colors'}
 
@@ -110,7 +110,7 @@ var
 
 implementation
 
-function ViToAlColor(aColor: TViColor): ALLEGRO_COLOR;
+function ViColorToAlColor(aColor: TViColor): ALLEGRO_COLOR;
 begin
   Result.r := aColor.Red;
   Result.g := aColor.Green;
@@ -118,7 +118,7 @@ begin
   Result.a := aColor.Alpha;
 end;
 
-function ViFromAlColor(aColor: ALLEGRO_COLOR): TViColor;
+function ViColorFromAlColor(aColor: ALLEGRO_COLOR): TViColor;
 begin
   Result.Red := aColor.r;
   Result.Green := aColor.g;
@@ -126,18 +126,18 @@ begin
   Result.Alpha := aColor.a;
 end;
 
-function ViMakeColor(aRed: Byte; aGreen: Byte; aBlue: Byte; aAlpha: Byte): TViColor;
+function ViColorMake(aRed: Byte; aGreen: Byte; aBlue: Byte; aAlpha: Byte): TViColor;
 begin
-  Result := ViFromAlColor(al_map_rgba(aRed, aGreen, aBlue, aAlpha));
+  Result := ViColorFromAlColor(al_map_rgba(aRed, aGreen, aBlue, aAlpha));
 end;
 
-function ViMakeColor(aRed: Single; aGreen: Single; aBlue: Single;
+function ViColorMake(aRed: Single; aGreen: Single; aBlue: Single;
   aAlpha: Single): TViColor;
 begin
-  Result := ViFromAlColor(al_map_rgba_f(aRed, aGreen, aBlue, aAlpha));
+  Result := ViColorFromAlColor(al_map_rgba_f(aRed, aGreen, aBlue, aAlpha));
 end;
 
-function ViFadeColor(aTo: TViColor; aFrom: TViColor; aPos: Single): TViColor;
+function ViColorFade(aTo: TViColor; aFrom: TViColor; aPos: Single): TViColor;
 var
   C: TViColor;
 begin
@@ -152,7 +152,7 @@ begin
   C.Blue := aFrom.Blue + ((aTo.Blue - aFrom.Blue) * aPos);
   C.Green := aFrom.Green + ((aTo.Green - aFrom.Green) * aPos);
   C.Red := aFrom.Red + ((aTo.Red - aFrom.Red) * aPos);
-  Result := ViMakeColor(C.Red, C.Green, C.Blue, C.Alpha);
+  Result := ViColorMake(C.Red, C.Green, C.Blue, C.Alpha);
 end;
 
 function ViColorEqual(aColor1: TViColor; aColor2: TViColor): Boolean;

@@ -115,6 +115,11 @@
         <DCCReference Include="..\..\source\lib\Vivace.Font.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Video.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Audio.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.OS.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.Screenshake.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.Screenshot.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.Utils.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.Starfield.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

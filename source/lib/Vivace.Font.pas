@@ -81,7 +81,6 @@ implementation
 
 uses
   System.SysUtils,
-  System.IOUtils,
   Vivace.Math,
   Vivace.Display,
   Vivace.Engine;
@@ -116,11 +115,10 @@ var
 begin
   if aFilename.IsEmpty then
     Exit;
-
-  Unload;
   FName := aFilename;
-  if TFile.Exists(FName) then
+  if ViEngine.OS.FileExists(FName) then
   begin
+    Unload;
     al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR or ALLEGRO_MAG_LINEAR or
       ALLEGRO_MIPMAP or ALLEGRO_VIDEO_BITMAP);
     FHandle := al_load_font(PAnsiChar(AnsiString(FName)), aSize, 0);

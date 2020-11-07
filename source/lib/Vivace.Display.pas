@@ -844,7 +844,9 @@ begin
   fn := TPath.ChangeExtension(fn, 'png');
 
   // save screen bitmap to PNG filename
+  ViEngine.EnablePhysFS(False);
   al_save_bitmap(PAnsiChar(AnsiString(fn)), screenshot);
+  ViEngine.EnablePhysFS(True);
 
   // destroy screenshot bitmap
   al_destroy_bitmap(screenshot);

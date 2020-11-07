@@ -51,6 +51,9 @@ uses
   Vivace.Input,
   Vivace.Speech,
   Vivace.Audio,
+  Vivace.OS,
+  Vivace.Screenshake,
+  Vivace.Screenshot,
   Vivace.Game;
 
 type
@@ -67,12 +70,16 @@ type
     FTerminate: Boolean;
     FKeyCode: Integer;
     FDefaultWindowPos: TViPointi;
+    FFIState: array[False..True] of ALLEGRO_STATE;
     FTimer: TViTimer;
     FMath: TViMath;
     FInput: TViInput;
     FDisplay: TViDisplay;
     FSpeech: TViSpeech;
     FAudio: TViAudio;
+    FScreenshake: TViScreenshakes;
+    FScreenshot: TViScreenshot;
+    FOS: TViOS;
     FGame: TViGame;
     procedure StartupAllegro;
     procedure ShutdownAllegro;
@@ -125,6 +132,12 @@ type
 
     property Audio: TViAudio read FAudio;
 
+    property OS: TViOS read FOS;
+
+    property Screenshake: TViScreenshakes read FScreenshake;
+
+    property Screenshot: TViScreenshot read FScreenshot;
+
     constructor Create; override;
 
     destructor Destroy; override;
@@ -135,6 +148,7 @@ type
 
     function FrameElapsed(var aTimer: Single; aFrames: Single): Boolean;
 
+    procedure EnablePhysFS(aEnable: Boolean);
     function Mount(aPath: string): Boolean;
     function Unmount(aPath: string): Boolean;
 
@@ -223,10 +237,14 @@ begin
     al_reserve_samples(MAX_AUDIO_CHANNELS);
   end;
 
+
   // init physfs
+  al_store_state(@FFIState[False], ALLEGRO_STATE_NEW_FILE_INTERFACE);
+  al_store_state(@FFIState[True], ALLEGRO_STATE_NEW_FILE_INTERFACE);
   if PHYSFS_init(nil) then
   begin
     al_set_physfs_file_interface;
+    al_store_state(@FFIState[True], ALLEGRO_STATE_NEW_FILE_INTERFACE);
   end;
 
   InitCommonColors;
@@ -267,36 +285,36 @@ end;
 procedure TViEngine.InitCommonColors;
 begin
   // Common Colors
-  VILIGHTGRAY := ViMakeColor(200, 200, 200, 255);
-  VIGRAY := ViMakeColor(130, 130, 130, 255);
-  VIDARKGRAY := ViMakeColor(80, 80, 80, 255);
-  VIYELLOW := ViMakeColor(253, 249, 0, 255);
-  VIGOLD := ViMakeColor(255, 203, 0, 255);
-  VIORANGE := ViMakeColor(255, 161, 0, 255);
-  VIPINK := ViMakeColor(255, 109, 194, 255);
-  VIRED := ViMakeColor(230, 41, 55, 255);
-  VIMAROON := ViMakeColor(190, 33, 55, 255);
-  VIGREEN := ViMakeColor(0, 228, 48, 255);
-  VILIME := ViMakeColor(0, 158, 47, 255);
-  VIDARKGREEN := ViMakeColor(0, 117, 44, 255);
-  VISKYBLUE := ViMakeColor(102, 191, 255, 255);
-  VIBLUE := ViMakeColor(0, 121, 241, 255);
-  VIDARKBLUE := ViMakeColor(0, 82, 172, 255);
-  VIPURPLE := ViMakeColor(200, 122, 255, 255);
-  VIVIOLET := ViMakeColor(135, 60, 190, 255);
-  VIDARKPURPLE := ViMakeColor(112, 31, 126, 255);
-  VIBEIGE := ViMakeColor(211, 176, 131, 255);
-  VIBROWN := ViMakeColor(127, 106, 79, 255);
-  VIDARKBROWN := ViMakeColor(76, 63, 47, 255);
-  VIWHITE := ViMakeColor(255, 255, 255, 255);
-  VIBLACK := ViMakeColor(0, 0, 0, 255);
-  VIBLANK := ViMakeColor(0, 0, 0, 0);
-  VIMEGENTA := ViMakeColor(255, 0, 255, 255);
-  VIWHITE2 := ViMakeColor(245, 245, 245, 255);
-  VIRED2 := ViMakeColor(126, 50, 63, 255);
-  VICOLORKEY := ViMakeColor(255, 000, 255, 255);
-  VIOVERLAY1 := ViMakeColor(000, 032, 041, 180);
-  VIOVERLAY2 := ViMakeColor(001, 027, 001, 255);
+  VILIGHTGRAY := ViColorMake(200, 200, 200, 255);
+  VIGRAY := ViColorMake(130, 130, 130, 255);
+  VIDARKGRAY := ViColorMake(80, 80, 80, 255);
+  VIYELLOW := ViColorMake(253, 249, 0, 255);
+  VIGOLD := ViColorMake(255, 203, 0, 255);
+  VIORANGE := ViColorMake(255, 161, 0, 255);
+  VIPINK := ViColorMake(255, 109, 194, 255);
+  VIRED := ViColorMake(230, 41, 55, 255);
+  VIMAROON := ViColorMake(190, 33, 55, 255);
+  VIGREEN := ViColorMake(0, 228, 48, 255);
+  VILIME := ViColorMake(0, 158, 47, 255);
+  VIDARKGREEN := ViColorMake(0, 117, 44, 255);
+  VISKYBLUE := ViColorMake(102, 191, 255, 255);
+  VIBLUE := ViColorMake(0, 121, 241, 255);
+  VIDARKBLUE := ViColorMake(0, 82, 172, 255);
+  VIPURPLE := ViColorMake(200, 122, 255, 255);
+  VIVIOLET := ViColorMake(135, 60, 190, 255);
+  VIDARKPURPLE := ViColorMake(112, 31, 126, 255);
+  VIBEIGE := ViColorMake(211, 176, 131, 255);
+  VIBROWN := ViColorMake(127, 106, 79, 255);
+  VIDARKBROWN := ViColorMake(76, 63, 47, 255);
+  VIWHITE := ViColorMake(255, 255, 255, 255);
+  VIBLACK := ViColorMake(0, 0, 0, 255);
+  VIBLANK := ViColorMake(0, 0, 0, 0);
+  VIMEGENTA := ViColorMake(255, 0, 255, 255);
+  VIWHITE2 := ViColorMake(245, 245, 245, 255);
+  VIRED2 := ViColorMake(126, 50, 63, 255);
+  VICOLORKEY := ViColorMake(255, 000, 255, 255);
+  VIOVERLAY1 := ViColorMake(000, 032, 041, 180);
+  VIOVERLAY2 := ViColorMake(001, 027, 001, 255);
 end;
 
 procedure TViEngine.SetTerminate(aTerminate: Boolean);
@@ -313,7 +331,7 @@ end;
 procedure TViEngine.SetUpdateSpeed(aSpeed: Single);
 begin
   FTimer.SetUpdateSpeed(aSpeed);
-  //FScreenshake.Timer.SetUpdateSpeed(aSpeed);
+  FScreenshake.Timer.SetUpdateSpeed(aSpeed);
 end;
 
 function TViEngine.GetUpdateSpeed: Single;
@@ -324,7 +342,7 @@ end;
 procedure TViEngine.SetFixedUpdateSpeed(aSpeed: Single);
 begin
   FTimer.SetFixedUpdateSpeed(aSpeed);
-  //FScreenshake.Timer.SetFixedUpdateSpeed(aSpeed);
+  FScreenshake.Timer.SetFixedUpdateSpeed(aSpeed);
 end;
 
 function TViEngine.GetFixedUpdateSpeed: Single;
@@ -349,18 +367,24 @@ begin
   FGame := nil;
   FTimer := TViTimer.Create;
   FMath := TViMath.Create;
+  FOS := TViOS.Create;
   FDisplay := TViDisplay.Create;
   FInput := TViInput.Create;
   FSpeech := TViSpeech.Create;
   FAudio := TViAudio.Create;
+  FScreenshake := TViScreenshakes.Create;
+  FScreenshot := TViScreenshot.Create;
 end;
 
 destructor TViEngine.Destroy;
 begin
+  FreeAndNil(FScreenshot);
+  FreeAndNil(FScreenshake);
   FreeAndNil(FAudio);
   FreeAndNil(FSpeech);
   FreeAndNil(FInput);
   FreeAndNil(FDisplay);
+  FreeAndNil(FOS);
   FreeAndNil(FMath);
   FreeAndNil(FTimer);
   ShutdownAllegro;
@@ -380,6 +404,11 @@ end;
 function TViEngine.FrameElapsed(var aTimer: Single; aFrames: Single): Boolean;
 begin
   Result := FTimer.FrameElapsed(aTimer, aFrames);
+end;
+
+procedure TViEngine.EnablePhysFS(aEnable: Boolean);
+begin
+  al_restore_state(@FFIState[aEnable]);
 end;
 
 function TViEngine.Mount(aPath: string): Boolean;
@@ -717,7 +746,7 @@ begin
         OnRender;
 
         // process screen shakes
-        //FScreenshake.Update;
+        FScreenshake.Update;
 
         // save the current transform
         trans := al_get_current_transform^;
@@ -738,7 +767,7 @@ begin
         al_use_transform(@trans);
 
         // process screen shots
-        //FScreenshot.Process;
+        FScreenshot.Process;
 
         // show display
         OnShowDisplay;

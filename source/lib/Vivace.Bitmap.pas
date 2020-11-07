@@ -279,29 +279,32 @@ end;
 
 procedure TViBitmap.Load(aFilename: string; aColorKey: PViColor);
 var
-  fn: string;
   ColorKey: PALLEGRO_COLOR absolute aColorKey;
 begin
-  Unload;
-  fn := aFilename;
+  if aFilename.IsEmpty then
+    Exit;
 
-  // al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR or ALLEGRO_MAG_LINEAR);
-  al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR or ALLEGRO_MAG_LINEAR or
-    ALLEGRO_VIDEO_BITMAP);
-
-  FHandle := al_load_bitmap(PAnsiChar(AnsiString(fn)));
-  if FHandle <> nil then
+  if ViEngine.OS.FileExists(aFilename) then
   begin
+    Unload;
 
-    FWidth := al_get_bitmap_width(FHandle);
-    FHeight := al_get_bitmap_height(FHandle);
+    al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR or ALLEGRO_MAG_LINEAR or
+      ALLEGRO_VIDEO_BITMAP);
 
-    // apply colorkey
-    if aColorKey <> nil then
+    FHandle := al_load_bitmap(PAnsiChar(AnsiString(aFilename)));
+    if FHandle <> nil then
     begin
-      al_convert_mask_to_alpha(FHandle, ColorKey^)
+
+      FWidth := al_get_bitmap_width(FHandle);
+      FHeight := al_get_bitmap_height(FHandle);
+
+      // apply colorkey
+      if aColorKey <> nil then
+      begin
+        al_convert_mask_to_alpha(FHandle, ColorKey^)
+      end;
+      FFilename := aFilename;
     end;
-    FFilename := aFilename;
   end;
 end;
 
