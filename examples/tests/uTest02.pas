@@ -63,7 +63,8 @@ uses
   Vivace.Video,
   Vivace.Audio,
   Vivace.Bitmap,
-  Vivace.Starfield;
+  Vivace.Starfield,
+  Vivace.IMGUI;
 
 type
   { TMyGame }
@@ -188,6 +189,11 @@ end;
 procedure TMyGame.OnProcessIMGUI;
 begin
   inherited;
+  ViEngine.IMGUI.WindowBegin('Test', 'Test Window', 50, 50, 100, 100,
+    [IMGUI_WINDOW_BORDER, IMGUI_WINDOW_MOVABLE, IMGUI_WINDOW_SCALABLE,
+    IMGUI_WINDOW_TITLE]);
+
+  ViEngine.IMGUI.WindowEnd;
 
 end;
 
@@ -227,6 +233,8 @@ procedure TMyGame.OnShutdown;
 var
   I: Integer;
 begin
+  ViEngine.IMGUI.Close;
+
   FreeAndNil(FVideo2);
   FreeAndNil(FVideo1);
   FreeAndNil(FMusic1);
@@ -300,6 +308,10 @@ begin
   //FVideo2.Play(True, 1.0);
 
   ViEngine.Speech.Speak('Vivace Game Toolkit', True);
+
+
+  ViEngine.IMGUI.Open(12, 'arc/fonts/gui.ttf');
+  ViEngine.IMGUI.SetStyle(IMGUI_THEME_DARK);
 end;
 
 procedure TMyGame.OnStartupDialogMore;

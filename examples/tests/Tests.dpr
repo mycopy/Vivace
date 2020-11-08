@@ -74,7 +74,14 @@ uses
   Vivace.Screenshake in '..\..\source\lib\Vivace.Screenshake.pas',
   Vivace.Screenshot in '..\..\source\lib\Vivace.Screenshot.pas',
   Vivace.Utils in '..\..\source\lib\Vivace.Utils.pas',
-  Vivace.Starfield in '..\..\source\lib\Vivace.Starfield.pas';
+  Vivace.Starfield in '..\..\source\lib\Vivace.Starfield.pas',
+  Vivace.Collision in '..\..\source\lib\Vivace.Collision.pas',
+  Vivace.Polygon in '..\..\source\lib\Vivace.Polygon.pas',
+  Vivace.PolyPointTrace in '..\..\source\lib\Vivace.PolyPointTrace.pas',
+  Vivace.PolyPoint in '..\..\source\lib\Vivace.PolyPoint.pas',
+  Vivace.Sprite in '..\..\source\lib\Vivace.Sprite.pas',
+  Vivace.Entity in '..\..\source\lib\Vivace.Entity.pas',
+  Vivace.IMGUI in '..\..\source\lib\Vivace.IMGUI.pas';
 
 begin
   try

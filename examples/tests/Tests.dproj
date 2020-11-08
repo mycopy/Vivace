@@ -120,6 +120,13 @@
         <DCCReference Include="..\..\source\lib\Vivace.Screenshot.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Utils.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Starfield.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.Collision.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.Polygon.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.PolyPointTrace.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.PolyPoint.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.Sprite.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.Entity.pas"/>
+        <DCCReference Include="..\..\source\lib\Vivace.IMGUI.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

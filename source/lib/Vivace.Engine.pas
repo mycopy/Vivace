@@ -54,6 +54,7 @@ uses
   Vivace.OS,
   Vivace.Screenshake,
   Vivace.Screenshot,
+  Vivace.IMGUI,
   Vivace.Game;
 
 type
@@ -80,6 +81,7 @@ type
     FScreenshake: TViScreenshakes;
     FScreenshot: TViScreenshot;
     FOS: TViOS;
+    FIMGUI: TViIMGUI;
     FGame: TViGame;
     procedure StartupAllegro;
     procedure ShutdownAllegro;
@@ -122,6 +124,8 @@ type
 
     property DeltaTime: Double read GetDeltaTime;
 
+    property Timer: TViTimer read FTimer;
+
     property Math: TViMath read FMath;
 
     property Input: TViInput read FInput;
@@ -137,6 +141,8 @@ type
     property Screenshake: TViScreenshakes read FScreenshake;
 
     property Screenshot: TViScreenshot read FScreenshot;
+
+    property IMGUI: TViIMGUI read FIMGUI;
 
     constructor Create; override;
 
@@ -370,6 +376,7 @@ begin
   FOS := TViOS.Create;
   FDisplay := TViDisplay.Create;
   FInput := TViInput.Create;
+  FIMGUI := TViIMGUI.Create;
   FSpeech := TViSpeech.Create;
   FAudio := TViAudio.Create;
   FScreenshake := TViScreenshakes.Create;
@@ -382,6 +389,7 @@ begin
   FreeAndNil(FScreenshake);
   FreeAndNil(FAudio);
   FreeAndNil(FSpeech);
+  FreeAndNil(FIMGUI);
   FreeAndNil(FInput);
   FreeAndNil(FDisplay);
   FreeAndNil(FOS);
@@ -609,7 +617,7 @@ begin
       al_get_mouse_state(@FMouseState);
 
       // start imgui input processing
-      //FGUI.InputBegin;
+      FIMGUI.InputBegin;
 
       repeat
         //FLua.CollectGarbage;
@@ -618,7 +626,7 @@ begin
         begin
 
           // process imgui events
-          //FGUI.HandleEvent(FEvent);
+          FIMGUI.HandleEvent(FEvent);
 
           case FEvent.&type of
             ALLEGRO_EVENT_DISPLAY_CLOSE:
@@ -728,7 +736,7 @@ begin
       until al_is_event_queue_empty(FQueue);
 
       // end imgui input processing
-      //FGUI.InputEnd;
+      FIMGUI.InputEnd;
 
 
       if DisplayReady then
@@ -755,10 +763,10 @@ begin
         FDisplay.ResetTransform;
 
         // render imgui
-        //FGUI.Render;
+        FIMGUI.Render;
 
         // clear imgui resources
-        //FGUI.Clear;
+        FIMGUI.Clear;
 
         // render normal gui
         OnRenderGUI;
