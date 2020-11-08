@@ -191,7 +191,7 @@ begin
   inherited;
   ViEngine.IMGUI.WindowBegin('Test', 'Test Window', 50, 50, 100, 100,
     [IMGUI_WINDOW_BORDER, IMGUI_WINDOW_MOVABLE, IMGUI_WINDOW_SCALABLE,
-    IMGUI_WINDOW_TITLE]);
+    IMGUI_WINDOW_TITLE,IMGUI_WINDOW_CLOSABLE]);
 
   ViEngine.IMGUI.WindowEnd;
 

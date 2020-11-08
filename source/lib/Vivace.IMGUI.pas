@@ -415,7 +415,6 @@ var
   Size: nk_vec2;
   Count: Integer;
   I: Integer;
-  Sel: Integer;
 begin
   Count := Length(aItems);
   SetLength(Items, Count);
@@ -427,7 +426,6 @@ begin
   end;
   Size.x := aWidth;
   Size.y := aHeight;
-  //Result := nk_combo(@FCtx, @Items, Count, aSelected, aItemHeight, Size);
   Result := nk_combo(@FCtx, PPUTF8Char(@Items[0]), Count, aSelected, aItemHeight, Size);
   if Result <> aSelected then
     aChanged := True

@@ -81,7 +81,8 @@ uses
   Vivace.PolyPoint in '..\..\source\lib\Vivace.PolyPoint.pas',
   Vivace.Sprite in '..\..\source\lib\Vivace.Sprite.pas',
   Vivace.Entity in '..\..\source\lib\Vivace.Entity.pas',
-  Vivace.IMGUI in '..\..\source\lib\Vivace.IMGUI.pas';
+  Vivace.IMGUI in '..\..\source\lib\Vivace.IMGUI.pas',
+  Vivace.Actor in '..\..\source\lib\Vivace.Actor.pas';
 
 begin
   try

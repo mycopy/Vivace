@@ -190,7 +190,6 @@ var
   fx, fy: Single;
   tr: ALLEGRO_TRANSFORM;
   Color: ALLEGRO_COLOR absolute aColor;
-  vec: TViVector;
 begin
   if FHandle = nil then
     Exit;

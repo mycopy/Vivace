@@ -907,15 +907,12 @@ var
   StackIndex: Integer;
   FieldNameIndex: Integer;
   Items: TStringArray;
-  ok: Boolean;
 begin
   Items := ParseTableNames(aName);
   if not PushTableForGet(Items, aIndex, StackIndex, FieldNameIndex) then
     Exit;
   lua_getfield(FLua.State, StackIndex + (aIndex - 1),
     Marshall.AsAnsi(Items[FieldNameIndex]).ToPointer);
-
-  ok := True;
 
   case aType of
     vtInteger:
@@ -941,10 +938,6 @@ begin
           Value: LongBool := lua_toboolean(FLua.State, -1);
         Result := Boolean(Value);
       end;
-  else
-    begin
-      ok := False;
-    end;
   end;
 
   PopStack(StackIndex);
@@ -964,9 +957,6 @@ end;
 
 { --- TViLua ---------------------------------------------------------------- }
 procedure TViLua.Open;
-var
-  ms: TMemoryStream;
-  ls: TStringList;
 begin
   if FState <> nil then
     Exit;
@@ -1212,10 +1202,6 @@ begin
 end;
 
 procedure TViLua.Bundle(aInFilename: string; aOutFilename: string);
-var
-  err: string;
-  Res: Integer;
-  Marshall: TMarshaller;
 begin
   if aInFilename.IsEmpty then
     Exit;
@@ -1590,7 +1576,6 @@ var
   Marshall: TMarshaller;
   Index: Integer;
   Items: TStringArray;
-  ok: Boolean;
   Count: Integer;
   Name: string;
 begin
@@ -1637,7 +1622,6 @@ var
   Marshall: TMarshaller;
   Index: Integer;
   Items: TStringArray;
-  ok: Boolean;
   Count: Integer;
   Name: string;
 begin
@@ -1667,8 +1651,6 @@ begin
     Exit;
   end;
 
-  ok := True;
-
   case aType of
     vtInteger:
       begin
@@ -1693,10 +1675,6 @@ begin
           Bool: LongBool := lua_toboolean(FState, -1);
         Result := Boolean(Bool);
       end;
-  else
-    begin
-      ok := False;
-    end;
   end;
 
   CleanStack;

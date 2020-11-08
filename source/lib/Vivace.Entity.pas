@@ -52,8 +52,8 @@ uses
 
 type
 
-  { TEntity }
-  TEntity = class(TViBaseObject)
+  { TViEntity }
+  TViEntity = class(TViBaseObject)
   protected
     FSprite      : TViSprite;
     FGroup       : Integer;
@@ -124,7 +124,7 @@ type
 
     function  Overlap(aX: Single; aY: Single; aRadius: Single;
       aShrinkFactor: Single): Boolean; overload;
-    function  Overlap(aEntity: TEntity): Boolean; overload;
+    function  Overlap(aEntity: TViEntity): Boolean; overload;
 
     procedure Render(aVirtualX: Single; aVirtualY: Single);
     procedure RenderAt(aX: Single; aY: Single);
@@ -153,7 +153,7 @@ type
     function  GetRenderPolyPoint: Boolean;
     procedure TracePolyPoint(aMju: Single=6; aMaxStepBack: Integer=12;
       aAlphaThreshold: Integer=70; aOrigin: PViVector=nil);
-    function  CollidePolyPoint(aEntity: TEntity; var aHitPos: TViVector): Boolean;
+    function  CollidePolyPoint(aEntity: TViEntity; var aHitPos: TViVector): Boolean;
     function  CollidePolyPointPoint(var aPoint: TViVector): Boolean;
   end;
 
@@ -163,18 +163,18 @@ uses
   System.SysUtils,
   Vivace.Engine;
 
-{--- TEntity ---------------------------------------------------------------- }
-constructor TEntity.Create;
+{--- TViEntity -------------------------------------------------------------- }
+constructor TViEntity.Create;
 begin
   inherited;
 end;
 
-destructor TEntity.Destroy;
+destructor TViEntity.Destroy;
 begin
   inherited;
 end;
 
-procedure  TEntity.Init(aSprite: TViSprite; aGroup: Integer);
+procedure  TViEntity.Init(aSprite: TViSprite; aGroup: Integer);
 begin
   FSprite      := aSprite;
   FGroup       := aGroup;
@@ -197,13 +197,13 @@ begin
   SetFrame(FFrame);
 end;
 
-procedure TEntity.SetFrameRange(aFirst: Integer; aLast: Integer);
+procedure TViEntity.SetFrameRange(aFirst: Integer; aLast: Integer);
 begin
   FFirstFrame := aFirst;
   FLastFrame  := aLast;
 end;
 
-function  TEntity.NextFrame: Boolean;
+function  TViEntity.NextFrame: Boolean;
 begin
   Result := False;
   if ViEngine.Timer.FrameSpeed(FFrameTimer, FFrameFPS) then
@@ -221,7 +221,7 @@ begin
   SetFrame(FFrame);
 end;
 
-function  TEntity.PrevFrame: Boolean;
+function  TViEntity.PrevFrame: Boolean;
 begin
   Result := False;
   if ViEngine.Timer.FrameSpeed(FFrameTimer, FFrameFPS) then
@@ -240,7 +240,7 @@ begin
   SetFrame(FFrame);
 end;
 
-procedure TEntity.SetPosAbs(aX: Single; aY: Single);
+procedure TViEntity.SetPosAbs(aX: Single; aY: Single);
 begin
   FPos.X := aX;
   FPos.Y := aY;
@@ -248,7 +248,7 @@ begin
   FDir.Y := 0;
 end;
 
-procedure TEntity.SetPosRel(aX: Single; aY: Single);
+procedure TViEntity.SetPosRel(aX: Single; aY: Single);
 begin
   FPos.X := FPos.X + aX;
   FPos.Y := FPos.Y + aY;
@@ -256,39 +256,39 @@ begin
   FDir.Y := aY;
 end;
 
-procedure TEntity.SetScaleAbs(aScale: Single);
+procedure TViEntity.SetScaleAbs(aScale: Single);
 begin
   FScale := aScale;
   SetFrame(FFrame);
 end;
 
-procedure TEntity.SetScaleRel(aScale: Single);
+procedure TViEntity.SetScaleRel(aScale: Single);
 begin
   FScale := FScale + aScale;
   SetFrame(FFrame);
 end;
 
-procedure TEntity.SetAngleOffset(aAngle: Single);
+procedure TViEntity.SetAngleOffset(aAngle: Single);
 begin
   aAngle := aAngle + FAngleOffset;
   ViEngine.Math.ClipValue(aAngle, 0, 360, True);
   FAngleOffset := aAngle;
 end;
 
-procedure TEntity.RotateAbs(aAngle: Single);
+procedure TViEntity.RotateAbs(aAngle: Single);
 begin
   ViEngine.Math.ClipValue(aAngle, 0, 360, True);
   FAngle := aAngle;
 end;
 
-procedure TEntity.RotateRel(aAngle: Single);
+procedure TViEntity.RotateRel(aAngle: Single);
 begin
   aAngle := aAngle + FAngle;
   ViEngine.Math.ClipValue(aAngle, 0, 360, True);
   FAngle := aAngle;
 end;
 
-function  TEntity.RotateToAngle(aAngle: Single; aSpeed: Single): Boolean;
+function  TViEntity.RotateToAngle(aAngle: Single; aSpeed: Single): Boolean;
 var
   Step: Single;
   Len : Single;
@@ -308,7 +308,7 @@ begin
   end;
 end;
 
-function  TEntity.RotateToPos(aX: Single; aY: Single; aSpeed: Single): Boolean;
+function  TViEntity.RotateToPos(aX: Single; aY: Single; aSpeed: Single): Boolean;
 var
   Angle: Single;
   Step : Single;
@@ -335,7 +335,7 @@ begin
   end;
 end;
 
-function  TEntity.RotateToPosAt(aSrcX: Single; aSrcY: Single; aDestX: Single; aDestY: Single; aSpeed: Single): Boolean;
+function  TViEntity.RotateToPosAt(aSrcX: Single; aSrcY: Single; aDestX: Single; aDestY: Single; aSpeed: Single): Boolean;
 var
   Angle: Single;
   Step : Single;
@@ -363,7 +363,7 @@ begin
   end;
 end;
 
-procedure TEntity.Thrust(aSpeed: Single);
+procedure TViEntity.Thrust(aSpeed: Single);
 var
   A, S: Single;
 begin
@@ -379,7 +379,7 @@ begin
   FPos.y := FPos.y + FDir.y;
 end;
 
-procedure TEntity.ThrustAngle(aAngle: Single; aSpeed: Single);
+procedure TViEntity.ThrustAngle(aAngle: Single; aSpeed: Single);
 var
   A, S: Single;
 begin
@@ -396,7 +396,7 @@ begin
   FPos.y := FPos.y + FDir.y;
 end;
 
-function  TEntity.ThrustToPos(aThrustSpeed: Single; aRotSpeed: Single; aDestX: Single; aDestY: Single; aSlowdownDist: Single; aStopDist: Single; aStopSpeed: Single; aStopSpeedEpsilon: Single; aDeltaTime: Single): Boolean;
+function  TViEntity.ThrustToPos(aThrustSpeed: Single; aRotSpeed: Single; aDestX: Single; aDestY: Single; aSlowdownDist: Single; aStopDist: Single; aStopSpeed: Single; aStopSpeedEpsilon: Single; aDeltaTime: Single): Boolean;
 var
   Dist : Single;
   Step : Single;
@@ -436,7 +436,7 @@ begin
 
 end;
 
-function  TEntity.IsVisible(aVirtualX: Single; aVirtualY: Single): Boolean;
+function  TViEntity.IsVisible(aVirtualX: Single; aVirtualY: Single): Boolean;
 var
   HW,HH: Single;
   vpx,vpy,vpw,vph: Integer;
@@ -462,7 +462,7 @@ begin
   Result := True;
 end;
 
-function  TEntity.IsFullyVisible(aVirtualX: Single; aVirtualY: Single): Boolean;
+function  TViEntity.IsFullyVisible(aVirtualX: Single; aVirtualY: Single): Boolean;
 var
   HW,HH: Single;
   vpx,vpy,vpw,vph: Integer;
@@ -488,7 +488,7 @@ begin
   Result := True;
 end;
 
-function  TEntity.Overlap(aX: Single; aY: Single; aRadius: Single; aShrinkFactor: Single): Boolean;
+function  TViEntity.Overlap(aX: Single; aY: Single; aRadius: Single; aShrinkFactor: Single): Boolean;
 var
   Dist: Single;
   R1  : Single;
@@ -512,7 +512,7 @@ begin
    Result := False;
 end;
 
-function  TEntity.Overlap(aEntity: TEntity): Boolean;
+function  TViEntity.Overlap(aEntity: TViEntity): Boolean;
 begin
   with aEntity do
   begin
@@ -520,7 +520,7 @@ begin
   end;
 end;
 
-procedure TEntity.Render(aVirtualX: Single; aVirtualY: Single);
+procedure TViEntity.Render(aVirtualX: Single; aVirtualY: Single);
 var
   X,Y: Single;
   SV: TViVector;
@@ -531,7 +531,7 @@ begin
   FSprite.DrawImage(FFrame, FGroup, X, Y, @FOrigin, @SV, FAngle, FColor, FHFlip, FVFlip, FRenderPolyPoint);
 end;
 
-procedure TEntity.RenderAt(aX: Single; aY: Single);
+procedure TViEntity.RenderAt(aX: Single; aY: Single);
 var
   SV: TViVector;
 begin
@@ -539,22 +539,22 @@ begin
   FSprite.DrawImage(FFrame, FGroup, aX, aY, @FOrigin, @SV, FAngle, FColor, FHFlip, FVFlip, FRenderPolyPoint);
 end;
 
-function  TEntity.GetSprite: TViSprite;
+function  TViEntity.GetSprite: TViSprite;
 begin
   Result := FSprite;
 end;
 
-function  TEntity.GetGroup: Integer;
+function  TViEntity.GetGroup: Integer;
 begin
   Result := FGroup;
 end;
 
-function  TEntity.GetFrame: Integer;
+function  TViEntity.GetFrame: Integer;
 begin
   Result := FFrame;
 end;
 
-procedure TEntity.SetFrame(aFrame: Integer);
+procedure TViEntity.SetFrame(aFrame: Integer);
 var
   W,H: Single;
   R  : Single;
@@ -574,63 +574,63 @@ begin
   FRadius := R * FScale;
 end;
 
-function  TEntity.GetFrameFPS: Single;
+function  TViEntity.GetFrameFPS: Single;
 begin
   Result := FFrameFPS;
 end;
 
-procedure TEntity.SetFrameFPS(aFrameFPS: Single);
+procedure TViEntity.SetFrameFPS(aFrameFPS: Single);
 begin
   FFrameFPS := aFrameFPS;
   FFrameTimer := 0;
 end;
 
-function  TEntity.GetFirstFrame: Integer;
+function  TViEntity.GetFirstFrame: Integer;
 begin
   Result := FFirstFrame;
 end;
 
-function  TEntity.GetLastFrame: Integer;
+function  TViEntity.GetLastFrame: Integer;
 begin
   Result := FLastFrame;
 end;
 
-function  TEntity.GetPos: TViVector;
+function  TViEntity.GetPos: TViVector;
 begin
   Result := FPos;
 end;
 
-function  TEntity.GetDir: TViVector;
+function  TViEntity.GetDir: TViVector;
 begin
   Result := FDir;
 end;
 
-function  TEntity.GetScale: Single;
+function  TViEntity.GetScale: Single;
 begin
   Result := FScale;
 end;
 
-function  TEntity.GetAngle: Single;
+function  TViEntity.GetAngle: Single;
 begin
   Result := FAngle;
 end;
 
-function  TEntity.GetAngleOffset: Single;
+function  TViEntity.GetAngleOffset: Single;
 begin
   Result := FAngleOffset;
 end;
 
-function  TEntity.GetColor: TViColor;
+function  TViEntity.GetColor: TViColor;
 begin
  Result := FColor;
 end;
 
-procedure TEntity.SetColor(aColor: TViColor);
+procedure TViEntity.SetColor(aColor: TViColor);
 begin
   FColor := aColor;
 end;
 
-procedure TEntity.GetFlipMode(aHFlip: PBoolean; aVFlip: PBoolean);
+procedure TViEntity.GetFlipMode(aHFlip: PBoolean; aVFlip: PBoolean);
 begin
   if Assigned(aHFlip) then
     aHFlip^ := FHFlip;
@@ -638,7 +638,7 @@ begin
     aVFlip^ := FVFlip;
 end;
 
-procedure TEntity.SetFlipMode(aHFlip: PBoolean; aVFlip: PBoolean);
+procedure TViEntity.SetFlipMode(aHFlip: PBoolean; aVFlip: PBoolean);
 begin
   if aHFlip <> nil then
     FHFlip := aHFlip^;
@@ -647,57 +647,57 @@ begin
     FVFlip := aVFlip^;
 end;
 
-function  TEntity.GetLoopFrame: Boolean;
+function  TViEntity.GetLoopFrame: Boolean;
 begin
   Result := FLoopFrame;
 end;
 
-procedure TEntity.SetLoopFrame(aLoop: Boolean);
+procedure TViEntity.SetLoopFrame(aLoop: Boolean);
 begin
   FLoopFrame := aLoop;
 end;
 
-function  TEntity.GetWidth: Single;
+function  TViEntity.GetWidth: Single;
 begin
   Result := FWidth;
 end;
 
-function  TEntity.GetHeight: Single;
+function  TViEntity.GetHeight: Single;
 begin
   Result := FHeight;
 end;
 
-function  TEntity.GetRadius: Single;
+function  TViEntity.GetRadius: Single;
 begin
   Result := FRadius;
 end;
 
-function  TEntity.GetShrinkFactor: Single;
+function  TViEntity.GetShrinkFactor: Single;
 begin
   Result := FShrinkFactor;
 end;
 
-procedure TEntity.SetShrinkFactor(aShrinkFactor: Single);
+procedure TViEntity.SetShrinkFactor(aShrinkFactor: Single);
 begin
   FShrinkFactor := aShrinkFactor;
 end;
 
-procedure TEntity.SetRenderPolyPoint(aRenderPolyPoint: Boolean);
+procedure TViEntity.SetRenderPolyPoint(aRenderPolyPoint: Boolean);
 begin
   FRenderPolyPoint := aRenderPolyPoint;
 end;
 
-function  TEntity.GetRenderPolyPoint: Boolean;
+function  TViEntity.GetRenderPolyPoint: Boolean;
 begin
   Result := FRenderPolyPoint;
 end;
 
-procedure TEntity.TracePolyPoint(aMju: Single=6; aMaxStepBack: Integer=12; aAlphaThreshold: Integer=70; aOrigin: PViVector=nil);
+procedure TViEntity.TracePolyPoint(aMju: Single=6; aMaxStepBack: Integer=12; aAlphaThreshold: Integer=70; aOrigin: PViVector=nil);
 begin
   FSprite.GroupPolyPointTrace(FGroup, aMju, aMaxStepBack, aAlphaThreshold, aOrigin);
 end;
 
-function  TEntity.CollidePolyPoint(aEntity: TEntity; var aHitPos: TViVector): Boolean;
+function  TViEntity.CollidePolyPoint(aEntity: TViEntity; var aHitPos: TViVector): Boolean;
 var
   ShrinkFactor: Single;
   HFlip,VFlip: Boolean;
@@ -714,7 +714,7 @@ begin
     ShrinkFactor, aHitPos);
 end;
 
-function  TEntity.CollidePolyPointPoint(var aPoint: TViVector): Boolean;
+function  TViEntity.CollidePolyPointPoint(var aPoint: TViVector): Boolean;
 var
   ShrinkFactor: Single;
 begin
