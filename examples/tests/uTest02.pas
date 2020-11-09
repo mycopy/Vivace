@@ -60,13 +60,10 @@ uses
   Vivace.Font,
   Vivace.Math,
   Vivace.Input,
-  Vivace.Text,
   Vivace.Video,
   Vivace.Audio,
   Vivace.Bitmap,
-  Vivace.Starfield,
-  Vivace.IMGUI,
-  Vivace.Nuklear.API;
+  Vivace.Starfield;
 
 type
   { TMyGame }
@@ -74,7 +71,6 @@ type
   protected
     FConsoleFont: TViFont;
     FDefaultFont: TViFont;
-    FText: TViTextCache;
     FVideo1: TViVideo;
     FVideo2: TViVideo;
     FMusic1: TViAudioStream;
@@ -188,128 +184,9 @@ begin
 
 end;
 
-type
-  tmenu_state = (MENU_NONE,MENU_FILE, MENU_EDIT,MENU_VIEW,MENU_CHART);
-
-var
-  show_menu: integer = nk_true;
-  show_app_about: integer = nk_false;
-  menu_state: tmenu_state = MENU_FILE;
-  state: nk_collapse_states;
-  values: array[0..11] of single = (26.0,13.0,30.0,15.0,25.0,10.0,20.0,40.0,12.0,8.0,22.0,28.0);
-  prog: nk_size = 40;
-  slider: integer = 10;
-  check: integer = nk_true;
-  mprog: nk_size = 60;
-  mslider: integer = 10;
-  mcheck: integer = nk_true;
-
 procedure TMyGame.OnProcessIMGUI;
-var
-  ctx: pnk_context;
 begin
   inherited;
-
-  ctx := ViEngine.IMGUI.Context;
-
-  ViEngine.IMGUI.WindowBegin('Test', 'Test Window', 50, 50, 200, 200,
-    [IMGUI_WINDOW_BORDER, IMGUI_WINDOW_MOVABLE, IMGUI_WINDOW_SCALABLE,
-    IMGUI_WINDOW_TITLE,IMGUI_WINDOW_CLOSABLE]);
-
-    if (show_menu = 1) then
-    begin
-
-      nk_menubar_begin(ctx);
-
-      // menu #1
-      nk_layout_row_begin(ctx, NK_STATIC, 25, 5);
-      nk_layout_row_push(ctx, 45);
-      if nk_menu_begin_label(ctx, 'MENU', NK_TEXT_LEFT, nk_vec2_(120, 200)) = nk_true then
-      begin
-          nk_layout_row_dynamic(ctx, 25, 1);
-          if (nk_menu_item_label(ctx, 'Hide', NK_TEXT_LEFT)) = nk_true then
-              show_menu := nk_false;
-          if (nk_menu_item_label(ctx, 'About', NK_TEXT_LEFT)) = nk_true then
-              show_app_about := nk_true;
-          nk_progress(ctx, @prog, 100, NK_MODIFIABLE);
-          nk_slider_int(ctx, 0, @slider, 16, 1);
-          nk_checkbox_label(ctx, 'check', @check);
-          nk_menu_end(ctx);
-      end;
-
-
-      // menu #2
-      nk_layout_row_push(ctx, 60);
-      if nk_menu_begin_label(ctx, 'ADVANCED', NK_TEXT_LEFT, nk_vec2_(200, 600)) = nk_true then
-      begin
-          state := ifThen(menu_state = MENU_FILE, NK_MAXIMIZED, NK_MINIMIZED);
-          if nk_tree_state_push(ctx, NK_TREE_TAB, 'FILE', @state) = nk_true then
-          begin
-            menu_state := MENU_FILE;
-            nk_menu_item_label(ctx, 'New', NK_TEXT_LEFT);
-            nk_menu_item_label(ctx, 'Open', NK_TEXT_LEFT);
-            nk_menu_item_label(ctx, 'Save', NK_TEXT_LEFT);
-            nk_menu_item_label(ctx, 'Close', NK_TEXT_LEFT);
-            nk_menu_item_label(ctx, 'Exit', NK_TEXT_LEFT);
-            nk_tree_pop(ctx);
-          end
-          else menu_state := tmenu_state(ifthen(menu_state = MENU_FILE, Ord(MENU_NONE), Ord(menu_state)));
-
-          state := ifthen(menu_state = MENU_EDIT, NK_MAXIMIZED, NK_MINIMIZED);
-          if nk_tree_state_push(ctx, NK_TREE_TAB, 'EDIT', @state) = nk_true then
-          begin
-              menu_state := MENU_EDIT;
-              nk_menu_item_label(ctx, 'Copy', NK_TEXT_LEFT);
-              nk_menu_item_label(ctx, 'Delete', NK_TEXT_LEFT);
-              nk_menu_item_label(ctx, 'Cut', NK_TEXT_LEFT);
-              nk_menu_item_label(ctx, 'Paste', NK_TEXT_LEFT);
-              nk_tree_pop(ctx);
-          end
-          //else menu_state := ifthen(menu_state = MENU_EDIT, MENU_NONE, menu_state);
-          else menu_state := tmenu_state(ifthen(menu_state = MENU_EDIT, Ord(MENU_NONE), Ord(menu_state)));
-
-          state := ifthen(menu_state = MENU_VIEW, NK_MAXIMIZED, NK_MINIMIZED);
-          if nk_tree_state_push(ctx, NK_TREE_TAB, 'VIEW', @state) = nk_true then
-          begin
-              menu_state := MENU_VIEW;
-              nk_menu_item_label(ctx, 'About', NK_TEXT_LEFT);
-              nk_menu_item_label(ctx, 'Options', NK_TEXT_LEFT);
-              nk_menu_item_label(ctx, 'Customize', NK_TEXT_LEFT);
-              nk_tree_pop(ctx);
-          end
-          //else menu_state := ifthen(menu_state = MENU_VIEW, MENU_NONE, menu_state);
-          else menu_state := tmenu_state(ifthen(menu_state = MENU_VIEW, Ord(MENU_NONE), Ord(menu_state)));
-
-
-          state := ifthen(menu_state = MENU_CHART, NK_MAXIMIZED, NK_MINIMIZED);
-          if nk_tree_state_push(ctx, NK_TREE_TAB, 'CHART', @state) = nk_true then
-          begin
-              var i: nk_size := 0;
-              menu_state := MENU_CHART;
-              nk_layout_row_dynamic(ctx, 150, 1);
-              nk_chart_begin(ctx, NK_CHART_COLUMN, Length(values), 0, 50);
-              //for (i = 0; i < Length(values); ++i)
-              for i := 0 to Length(values) do
-                  nk_chart_push(ctx, values[i]);
-              nk_chart_end(ctx);
-              nk_tree_pop(ctx);
-          end
-          else menu_state := tmenu_state(ifthen(menu_state = MENU_CHART, Ord(MENU_NONE), Ord(menu_state)));
-          nk_menu_end(ctx);
-      end;
-
-      // menu widgets
-      nk_layout_row_push(ctx, 70);
-      nk_progress(ctx, @mprog, 100, NK_MODIFIABLE);
-      nk_slider_int(ctx, 0, @mslider, 16, 1);
-      nk_checkbox_label(ctx, 'check', @mcheck);
-
-      nk_menubar_end(ctx);
-
-    end;
-
-  ViEngine.IMGUI.WindowEnd;
-
 end;
 
 procedure TMyGame.OnRender;
@@ -334,8 +211,6 @@ begin
     [ViEngine.FrameRate]);
   FConsoleFont.Print(Pos.x, Pos.y, 0, VIGREEN, alLeft, 'ESC Quit',
     [ViEngine.FrameRate]);
-
-  FText.Render;
 end;
 
 procedure TMyGame.OnShowDisplay;
@@ -348,8 +223,6 @@ procedure TMyGame.OnShutdown;
 var
   I: Integer;
 begin
-  ViEngine.IMGUI.Close;
-
   FreeAndNil(FVideo2);
   FreeAndNil(FVideo1);
   FreeAndNil(FMusic1);
@@ -357,7 +230,6 @@ begin
   for I := 0 to 8 do
     FreeAndNil(FSamples[I]);
   FreeAndNil(FLogo);
-  FreeAndNil(FText);
   FreeAndNil(FDefaultFont);
   FreeAndNil(FConsoleFont);
   FreeAndNil(FStarfield);
@@ -388,13 +260,6 @@ begin
   FDefaultFont := TViFont.Create;
   FDefaultFont.Load(18, 'arc/fonts/default.ttf');
 
-  FText := TViTextCache.Create;
-  FText.Print(FDefaultFont, 50, 50, alLeft, 1.0, 0.0, [VIWHITE, VIRED, VIBLUE,
-    VIYELLOW], 'My name is ^c3^%s^c0^', ['Jarrod Davis']);
-
-  FText.Print(FDefaultFont, 50, 50, alLeft, 1.0, 21.0, [VIWHITE, VIRED, VIBLUE,
-    VIYELLOW], 'My ^c1^name^c0^ is %s', ['Jarrod Davis']);
-
   FLogo := TViBitmap.Create;
   FLogo.Load('arc/bitmaps/sprites/vivace.png', nil);
 
@@ -423,10 +288,6 @@ begin
   //FVideo2.Play(True, 1.0);
 
   ViEngine.Speech.Speak('Vivace Game Toolkit', True);
-
-
-  ViEngine.IMGUI.Open(12, 'arc/fonts/gui.ttf');
-  ViEngine.IMGUI.SetStyle(IMGUI_THEME_DARK);
 end;
 
 procedure TMyGame.OnStartupDialogMore;

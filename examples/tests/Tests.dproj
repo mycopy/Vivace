@@ -99,17 +99,14 @@
         <DCCReference Include="..\..\source\lib\Vivace.Color.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Common.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Display.pas"/>
-        <DCCReference Include="..\..\source\lib\Vivace.ENet.API.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Engine.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Game.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Input.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Math.pas"/>
-        <DCCReference Include="..\..\source\lib\Vivace.Nuklear.API.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Speech.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.SpeechLib.TLB.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Timer.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Viewport.pas"/>
-        <DCCReference Include="..\..\source\lib\Vivace.Text.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Font.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Video.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Audio.pas"/>
@@ -124,7 +121,6 @@
         <DCCReference Include="..\..\source\lib\Vivace.PolyPoint.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Sprite.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Entity.pas"/>
-        <DCCReference Include="..\..\source\lib\Vivace.IMGUI.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Actor.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

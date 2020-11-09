@@ -54,17 +54,14 @@ uses
   Vivace.Color in '..\..\source\lib\Vivace.Color.pas',
   Vivace.Common in '..\..\source\lib\Vivace.Common.pas',
   Vivace.Display in '..\..\source\lib\Vivace.Display.pas',
-  Vivace.ENet.API in '..\..\source\lib\Vivace.ENet.API.pas',
   Vivace.Engine in '..\..\source\lib\Vivace.Engine.pas',
   Vivace.Game in '..\..\source\lib\Vivace.Game.pas',
   Vivace.Input in '..\..\source\lib\Vivace.Input.pas',
   Vivace.Math in '..\..\source\lib\Vivace.Math.pas',
-  Vivace.Nuklear.API in '..\..\source\lib\Vivace.Nuklear.API.pas',
   Vivace.Speech in '..\..\source\lib\Vivace.Speech.pas',
   Vivace.SpeechLib.TLB in '..\..\source\lib\Vivace.SpeechLib.TLB.pas',
   Vivace.Timer in '..\..\source\lib\Vivace.Timer.pas',
   Vivace.Viewport in '..\..\source\lib\Vivace.Viewport.pas',
-  Vivace.Text in '..\..\source\lib\Vivace.Text.pas',
   Vivace.Font in '..\..\source\lib\Vivace.Font.pas',
   Vivace.Video in '..\..\source\lib\Vivace.Video.pas',
   Vivace.Audio in '..\..\source\lib\Vivace.Audio.pas',
@@ -79,7 +76,6 @@ uses
   Vivace.PolyPoint in '..\..\source\lib\Vivace.PolyPoint.pas',
   Vivace.Sprite in '..\..\source\lib\Vivace.Sprite.pas',
   Vivace.Entity in '..\..\source\lib\Vivace.Entity.pas',
-  Vivace.IMGUI in '..\..\source\lib\Vivace.IMGUI.pas',
   Vivace.Actor in '..\..\source\lib\Vivace.Actor.pas';
 
 begin
