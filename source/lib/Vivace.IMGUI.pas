@@ -89,7 +89,9 @@ type
     FFont: TViFont;
     FUserFont: nk_user_font;
     FEditBuffer: array of UTF8Char;
+    function GetContext: pnk_context;
   public
+    property Context: pnk_context read GetContext;
     property Font: TViFont read FFont;
     constructor Create; override;
     destructor Destroy; override;
@@ -295,6 +297,11 @@ begin
       end;
 
   end;
+end;
+
+function TViIMGUI.GetContext: pnk_context;
+begin
+  Result := @FCtx;
 end;
 
 constructor TViIMGUI.Create;

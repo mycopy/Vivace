@@ -2893,11 +2893,18 @@ procedure nk_triangle_from_direction(result: Pnk_vec2; r: nk_rect;
   pad_x: Single; pad_y: Single; p5: nk_heading); cdecl;
   external cDllName name _PU + 'nk_triangle_from_direction';
 
+(*
 function nk_vec2_(x: Single; y: Single): nk_vec2; cdecl;
   external cDllName name _PU + 'nk_vec2';
 
 function nk_vec2i_(x: Integer; y: Integer): nk_vec2; cdecl;
   external cDllName name _PU + 'nk_vec2i';
+*)
+
+function nk_vec2_(x: Single; y: Single): nk_vec2; cdecl;
+
+function nk_vec2i_(x: Integer; y: Integer): nk_vec2; cdecl;
+
 
 function nk_vec2v(const xy: PSingle): nk_vec2; cdecl;
   external cDllName name _PU + 'nk_vec2v';
@@ -3315,5 +3322,18 @@ function nk_style_item_hide(): nk_style_item; cdecl;
   external cDllName name _PU + 'nk_style_item_hide';
 
 implementation
+
+function nk_vec2_(x: Single; y: Single): nk_vec2;
+begin
+  Result.x := x;
+  Result.y := y;
+end;
+
+function nk_vec2i_(x: Integer; y: Integer): nk_vec2;
+begin
+  Result.x := x;
+  Result.y := y;
+end;
+
 
 end.

@@ -58,8 +58,6 @@ uses
   Vivace.Engine in '..\..\source\lib\Vivace.Engine.pas',
   Vivace.Game in '..\..\source\lib\Vivace.Game.pas',
   Vivace.Input in '..\..\source\lib\Vivace.Input.pas',
-  Vivace.Lua.API in '..\..\source\lib\Vivace.Lua.API.pas',
-  Vivace.Lua in '..\..\source\lib\Vivace.Lua.pas',
   Vivace.Math in '..\..\source\lib\Vivace.Math.pas',
   Vivace.Nuklear.API in '..\..\source\lib\Vivace.Nuklear.API.pas',
   Vivace.Speech in '..\..\source\lib\Vivace.Speech.pas',

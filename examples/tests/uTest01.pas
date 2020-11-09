@@ -12,7 +12,6 @@ uses
   Vivace.Nuklear.API,
   Vivace.ENet.API,
   Vivace.Common,
-  Vivace.Lua,
   Vivace.Speech,
   uTests;
 
@@ -56,16 +55,6 @@ end;
 
 procedure Test05;
 var
-  Lua: TViLua;
-begin
-  Lua := TViLua.Create;
-  Lua.LoadString('print("Succesfully initialized " .. vivace.luaversion)');
-  FreeAndNil(Lua);
-  WaitForEnter;
-end;
-
-procedure Test06;
-var
   Spk: TViSpeech;
   I: Integer;
   S: string;
@@ -92,8 +81,7 @@ begin
   //Test02;  // Init Allegro
   //Test03;  // Init Nuklear
   //Test04;  // Init ENet
-  //Test05;  // Init Lua
-  Test06;  // Speech;
+  Test05;  // Speech;
 end;
 
 

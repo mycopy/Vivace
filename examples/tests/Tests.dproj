@@ -103,8 +103,6 @@
         <DCCReference Include="..\..\source\lib\Vivace.Engine.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Game.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Input.pas"/>
-        <DCCReference Include="..\..\source\lib\Vivace.Lua.API.pas"/>
-        <DCCReference Include="..\..\source\lib\Vivace.Lua.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Math.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Nuklear.API.pas"/>
         <DCCReference Include="..\..\source\lib\Vivace.Speech.pas"/>
