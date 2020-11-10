@@ -169,6 +169,9 @@ To run your game, call
 ```
 See the examples for more information on usage.
 
+## Download
+You can download the source code of the current development version from the [git repository](https://github.com/tinyBigGAMES/Vivace/archive/main.zip).
+
 ## Support
 
 Website: https://tinybiggames.com
