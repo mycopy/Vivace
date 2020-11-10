@@ -60,7 +60,15 @@ uses
   uCommon;
 
 const
-  cDisplayTitle = 'MyGame';
+  cArchiveFilename   = 'Data.arc';
+
+  cDisplayTitle      = 'MyGame';
+  cDisplayWidth      = 800;
+  cDisplayHeight     = 480;
+  cDisplayFullscreen = False;
+  cDisplayAntiAlias  = True;
+  cDisplayVSync      = True;
+  cDisplayRenderAPI  = raDirect3D;  
 
 type
   { TMyGame }
