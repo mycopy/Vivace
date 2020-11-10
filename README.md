@@ -88,7 +88,7 @@ type
   end;
 ```
 ### How to use
-The example of usage.
+A minimal implementation example:
 ```pascal
 uses
   System.SysUtils;
