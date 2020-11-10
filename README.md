@@ -46,8 +46,22 @@ In addition to your own project files, you will need to include `vivace.dll` in 
 
 ## A Tour of Vivace
 ### Game Object
-You just have to derive a new class from `TviGame` class and override a few callback methods.
+You just have to derive a new class from the `TviGame` base class and override a few callback methods. You access the toolkit functionality from the classes in the various Vivace.XXX units.
 ```pascal
+uses
+  Vivace.Color,
+  Vivace.Math,
+  Vivace.Timer,
+  Vivace.Input,
+  Vivace.Font,
+  Vivace.Font.Builtin,
+  Vivace.Game,
+  Vivace.Engine,
+  uCommon;
+
+const
+  cDisplayTitle = 'MyGame';
+
 type
   { TMyGame }
   TMyGame = class(TViGame)
@@ -68,6 +82,9 @@ type
 ### How to use
 The example of usage.
 ```pascal
+uses
+  System.SysUtils;
+
 { TMyGame }
 procedure TMyGame.OnLoad;
 begin
