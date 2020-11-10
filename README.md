@@ -5,7 +5,7 @@
 ![Twitter Follow](https://img.shields.io/twitter/follow/tinyBigGAMES?style=social) 
 
 # Welcome to Vivace
-Vivace&trade; (ve'va'CHe) Game Toolkit is an advanced 2D game development system for PC's running Microsoft Windows® and uses Direct3D® or OpenGL for hardware accelerated rendering.
+Vivace&trade; (ve'va'CHe) Game Toolkit is an SDK to allow easy, fast & fun 2D game development in [Delphi](https://www.embarcadero.com/products/delphi) on desktop PC's running Microsoft Windows® and uses Direct3D® or OpenGL for hardware accelerated rendering.
 
 It's robust, designed for easy, fast & fun use an suitable for making all types of 2D games and other graphic simulations, You access the features from a simple and intuitive API, to allow you to rapidly and efficiently develop your graphics simulations. There is support for bitmaps, audio samples, streaming music, video playback, loading resources directly from a standard ZIP archive and much more.
 
