@@ -63,7 +63,8 @@ type
     constructor Create; override;
     destructor Destroy; override;
 
-    procedure Load(aSize: Integer; aFilename: string);
+    procedure Load(aSize: Cardinal; aFilename: string); overload;
+    procedure Load(aSize: Cardinal; aMemory: Pointer; aLength: Int64); overload;
     procedure Unload;
     procedure Print(aX: Single; aY: Single; aColor: TViColor; aAlign: TViAlign;
       const aMsg: string; const aArgs: array of const); overload;
@@ -109,24 +110,48 @@ begin
   inherited;
 end;
 
-procedure TViFont.Load(aSize: Integer; aFilename: string);
+procedure TViFont.Load(aSize: Cardinal; aFilename: string);
 var
   FName: string;
+  Size: Integer;
 begin
   if aFilename.IsEmpty then
     Exit;
   FName := aFilename;
+  Size := -aSize;
   if ViEngine.OS.FileExists(FName) then
   begin
     Unload;
     al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR or ALLEGRO_MAG_LINEAR or
       ALLEGRO_MIPMAP or ALLEGRO_VIDEO_BITMAP);
-    FHandle := al_load_font(PAnsiChar(AnsiString(FName)), aSize, 0);
+    FHandle := al_load_font(PAnsiChar(AnsiString(FName)), Size, 0);
     if FHandle <> nil then
     begin
       FFilename := FName;
     end
   end;
+end;
+
+procedure TViFont.Load(aSize: Cardinal; aMemory: Pointer; aLength: Int64);
+var
+  mf: PALLEGRO_FILE;
+  Size: Integer;
+begin
+  mf := al_open_memfile(aMemory, aLength, 'rb');
+  Size := -aSize;
+  if mf <> nil then
+  begin
+    Unload;
+    al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR or ALLEGRO_MAG_LINEAR or
+      ALLEGRO_MIPMAP or ALLEGRO_VIDEO_BITMAP);
+    FHandle := al_load_ttf_font_f(mf, '', aSize, 0);
+    if FHandle <> nil then
+    begin
+      FFilename := 'MEMORYFILE';
+    end
+
+  end;
+
 end;
 
 procedure TViFont.Print(aX: Single; aY: Single; aColor: TViColor; aAlign: TViAlign;

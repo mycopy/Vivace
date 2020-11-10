@@ -73,6 +73,17 @@ type
     destructor Destroy; override;
   end;
 
+  { TViBaseUtility }
+  TviBaseUtility = class(TViBaseObject)
+  public
+    constructor Create; override;
+    destructor Destroy; override;
+    procedure ShowHeader; virtual;
+    procedure ShowUsage; virtual;
+    procedure Run; virtual;
+  end;
+
+
 implementation
 
 uses
@@ -89,5 +100,27 @@ begin
   inherited;
 end;
 
+{ --- TViBaseUtility -------------------------------------------------------- }
+constructor TViBaseUtility.Create;
+begin
+  inherited;
+end;
+
+destructor TViBaseUtility.Destroy;
+begin
+  inherited;
+end;
+
+procedure TViBaseUtility.ShowHeader;
+begin
+end;
+
+procedure TViBaseUtility.ShowUsage;
+begin
+end;
+
+procedure TViBaseUtility.Run;
+begin
+end;
 
 end.

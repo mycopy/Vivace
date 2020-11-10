@@ -76,7 +76,8 @@ uses
   Vivace.PolyPoint in '..\..\source\lib\Vivace.PolyPoint.pas',
   Vivace.Sprite in '..\..\source\lib\Vivace.Sprite.pas',
   Vivace.Entity in '..\..\source\lib\Vivace.Entity.pas',
-  Vivace.Actor in '..\..\source\lib\Vivace.Actor.pas';
+  Vivace.Actor in '..\..\source\lib\Vivace.Actor.pas',
+  Vivace.Font.Builtin in '..\..\source\lib\Vivace.Font.Builtin.pas';
 
 begin
   try

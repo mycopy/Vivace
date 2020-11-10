@@ -6,6 +6,9 @@
         <Projects Include="utils\viarc\viarc.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="utils\vibump\vidump.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="..\examples\tests\Tests.dproj">
             <Dependencies/>
         </Projects>
@@ -26,6 +29,15 @@
     <Target Name="viarc:Make">
         <MSBuild Projects="utils\viarc\viarc.dproj" Targets="Make"/>
     </Target>
+    <Target Name="vidump">
+        <MSBuild Projects="utils\vibump\vidump.dproj"/>
+    </Target>
+    <Target Name="vidump:Clean">
+        <MSBuild Projects="utils\vibump\vidump.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="vidump:Make">
+        <MSBuild Projects="utils\vibump\vidump.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Tests">
         <MSBuild Projects="..\examples\tests\Tests.dproj"/>
     </Target>
@@ -36,13 +48,13 @@
         <MSBuild Projects="..\examples\tests\Tests.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="viarc;Tests"/>
+        <CallTarget Targets="viarc;vidump;Tests"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="viarc:Clean;Tests:Clean"/>
+        <CallTarget Targets="viarc:Clean;vidump:Clean;Tests:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="viarc:Make;Tests:Make"/>
+        <CallTarget Targets="viarc:Make;vidump:Make;Tests:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

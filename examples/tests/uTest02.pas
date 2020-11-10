@@ -63,7 +63,8 @@ uses
   Vivace.Video,
   Vivace.Audio,
   Vivace.Bitmap,
-  Vivace.Starfield;
+  Vivace.Starfield,
+  Vivace.Font.Builtin;
 
 type
   { TMyGame }
@@ -211,6 +212,9 @@ begin
     [ViEngine.FrameRate]);
   FConsoleFont.Print(Pos.x, Pos.y, 0, VIGREEN, alLeft, 'ESC Quit',
     [ViEngine.FrameRate]);
+
+  FConsoleFont.Print(3, 80, VIWHITE, alLeft, 'This is a builtin console font', []);
+  FDefaultFont.Print(3, 100, VIWHITE, alLeft, 'This is a builtin default font', []);
 end;
 
 procedure TMyGame.OnShowDisplay;
@@ -254,11 +258,9 @@ begin
 
   //ViEngine.Mount('./');
   ViEngine.Mount('data.arc');
-  FConsoleFont := TViFont.Create;
-  FConsoleFont.Load(12, 'arc/fonts/console.ttf');
 
-  FDefaultFont := TViFont.Create;
-  FDefaultFont.Load(18, 'arc/fonts/default.ttf');
+  FConsoleFont := ViFontLoadConsole(12);
+  FDefaultFont := ViFontLoadDefault(18);
 
   FLogo := TViBitmap.Create;
   FLogo.Load('arc/bitmaps/sprites/vivace.png', nil);
