@@ -9,7 +9,16 @@
         <Projects Include="utils\vibump\vidump.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\examples\tests\Tests.dproj">
+        <Projects Include="..\examples\Minimal.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\Starfield.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\TiledBitmap.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\Actor.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -38,23 +47,50 @@
     <Target Name="vidump:Make">
         <MSBuild Projects="utils\vibump\vidump.dproj" Targets="Make"/>
     </Target>
-    <Target Name="Tests">
-        <MSBuild Projects="..\examples\tests\Tests.dproj"/>
+    <Target Name="Minimal">
+        <MSBuild Projects="..\examples\Minimal.dproj"/>
     </Target>
-    <Target Name="Tests:Clean">
-        <MSBuild Projects="..\examples\tests\Tests.dproj" Targets="Clean"/>
+    <Target Name="Minimal:Clean">
+        <MSBuild Projects="..\examples\Minimal.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="Tests:Make">
-        <MSBuild Projects="..\examples\tests\Tests.dproj" Targets="Make"/>
+    <Target Name="Minimal:Make">
+        <MSBuild Projects="..\examples\Minimal.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Starfield">
+        <MSBuild Projects="..\examples\Starfield.dproj"/>
+    </Target>
+    <Target Name="Starfield:Clean">
+        <MSBuild Projects="..\examples\Starfield.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Starfield:Make">
+        <MSBuild Projects="..\examples\Starfield.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TiledBitmap">
+        <MSBuild Projects="..\examples\TiledBitmap.dproj"/>
+    </Target>
+    <Target Name="TiledBitmap:Clean">
+        <MSBuild Projects="..\examples\TiledBitmap.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TiledBitmap:Make">
+        <MSBuild Projects="..\examples\TiledBitmap.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Actor">
+        <MSBuild Projects="..\examples\Actor.dproj"/>
+    </Target>
+    <Target Name="Actor:Clean">
+        <MSBuild Projects="..\examples\Actor.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Actor:Make">
+        <MSBuild Projects="..\examples\Actor.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="viarc;vidump;Tests"/>
+        <CallTarget Targets="viarc;vidump;Minimal;Starfield;TiledBitmap;Actor"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="viarc:Clean;vidump:Clean;Tests:Clean"/>
+        <CallTarget Targets="viarc:Clean;vidump:Clean;Minimal:Clean;Starfield:Clean;TiledBitmap:Clean;Actor:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="viarc:Make;vidump:Make;Tests:Make"/>
+        <CallTarget Targets="viarc:Make;vidump:Make;Minimal:Make;Starfield:Make;TiledBitmap:Make;Actor:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

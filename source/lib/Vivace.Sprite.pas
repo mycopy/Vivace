@@ -266,7 +266,7 @@ begin
       oxy.Y := Round(oxy.Y * aOrigin.Y);
     end;
     TViPolyPoint(FGroup[aGroup].PolyPoint).Render(aNum, aX, aY, aScale.X, aAngle,
-      VIYELLOW, @oxy, aHFlip, aVFlip);
+      YELLOW, @oxy, aHFlip, aVFlip);
   end;
 end;
 

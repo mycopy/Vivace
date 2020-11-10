@@ -183,7 +183,7 @@ begin
   FScale       := 1.0;
   FAngle       := 0;
   FAngleOffset := 0;
-  FColor       := VIWHITE;
+  FColor       := WHITE;
   FHFlip       := False;
   FVFlip       := False;
   FLoopFrame   := True;

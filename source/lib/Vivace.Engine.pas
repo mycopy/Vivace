@@ -290,36 +290,36 @@ end;
 procedure TViEngine.InitCommonColors;
 begin
   // Common Colors
-  VILIGHTGRAY := ViColorMake(200, 200, 200, 255);
-  VIGRAY := ViColorMake(130, 130, 130, 255);
-  VIDARKGRAY := ViColorMake(80, 80, 80, 255);
-  VIYELLOW := ViColorMake(253, 249, 0, 255);
-  VIGOLD := ViColorMake(255, 203, 0, 255);
-  VIORANGE := ViColorMake(255, 161, 0, 255);
-  VIPINK := ViColorMake(255, 109, 194, 255);
-  VIRED := ViColorMake(230, 41, 55, 255);
-  VIMAROON := ViColorMake(190, 33, 55, 255);
-  VIGREEN := ViColorMake(0, 228, 48, 255);
-  VILIME := ViColorMake(0, 158, 47, 255);
-  VIDARKGREEN := ViColorMake(0, 117, 44, 255);
-  VISKYBLUE := ViColorMake(102, 191, 255, 255);
-  VIBLUE := ViColorMake(0, 121, 241, 255);
-  VIDARKBLUE := ViColorMake(0, 82, 172, 255);
-  VIPURPLE := ViColorMake(200, 122, 255, 255);
-  VIVIOLET := ViColorMake(135, 60, 190, 255);
-  VIDARKPURPLE := ViColorMake(112, 31, 126, 255);
-  VIBEIGE := ViColorMake(211, 176, 131, 255);
-  VIBROWN := ViColorMake(127, 106, 79, 255);
-  VIDARKBROWN := ViColorMake(76, 63, 47, 255);
-  VIWHITE := ViColorMake(255, 255, 255, 255);
-  VIBLACK := ViColorMake(0, 0, 0, 255);
-  VIBLANK := ViColorMake(0, 0, 0, 0);
-  VIMEGENTA := ViColorMake(255, 0, 255, 255);
-  VIWHITE2 := ViColorMake(245, 245, 245, 255);
-  VIRED2 := ViColorMake(126, 50, 63, 255);
-  VICOLORKEY := ViColorMake(255, 000, 255, 255);
-  VIOVERLAY1 := ViColorMake(000, 032, 041, 180);
-  VIOVERLAY2 := ViColorMake(001, 027, 001, 255);
+  LIGHTGRAY := ViColorMake(200, 200, 200, 255);
+  GRAY := ViColorMake(130, 130, 130, 255);
+  DARKGRAY := ViColorMake(80, 80, 80, 255);
+  YELLOW := ViColorMake(253, 249, 0, 255);
+  GOLD := ViColorMake(255, 203, 0, 255);
+  ORANGE := ViColorMake(255, 161, 0, 255);
+  PINK := ViColorMake(255, 109, 194, 255);
+  RED := ViColorMake(230, 41, 55, 255);
+  MAROON := ViColorMake(190, 33, 55, 255);
+  GREEN := ViColorMake(0, 228, 48, 255);
+  LIME := ViColorMake(0, 158, 47, 255);
+  DARKGREEN := ViColorMake(0, 117, 44, 255);
+  SKYBLUE := ViColorMake(102, 191, 255, 255);
+  BLUE := ViColorMake(0, 121, 241, 255);
+  DARKBLUE := ViColorMake(0, 82, 172, 255);
+  PURPLE := ViColorMake(200, 122, 255, 255);
+  VIOLET := ViColorMake(135, 60, 190, 255);
+  DARKPURPLE := ViColorMake(112, 31, 126, 255);
+  BEIGE := ViColorMake(211, 176, 131, 255);
+  BROWN := ViColorMake(127, 106, 79, 255);
+  DARKBROWN := ViColorMake(76, 63, 47, 255);
+  WHITE := ViColorMake(255, 255, 255, 255);
+  BLACK := ViColorMake(0, 0, 0, 255);
+  BLANK := ViColorMake(0, 0, 0, 0);
+  MEGENTA := ViColorMake(255, 0, 255, 255);
+  WHITE2 := ViColorMake(245, 245, 245, 255);
+  RED2 := ViColorMake(126, 50, 63, 255);
+  COLORKEY := ViColorMake(255, 000, 255, 255);
+  OVERLAY1 := ViColorMake(000, 032, 041, 180);
+  OVERLAY2 := ViColorMake(001, 027, 001, 255);
 end;
 
 procedure TViEngine.SetTerminate(aTerminate: Boolean);
@@ -401,6 +401,7 @@ end;
 procedure TViEngine.ResetTiming;
 begin
   FTimer.Reset;
+  FScreenshake.Timer.Reset;
 end;
 
 function TViEngine.FrameSpeed(var aTimer: Single; aSpeed: Single): Boolean;
@@ -474,6 +475,9 @@ procedure TViEngine.OnDisplayReady(aReady: Boolean);
 begin
   if Assigned(FGame) then
     FGame.OnDisplayReady(aReady);
+
+  if aReady then
+    ResetTiming;
 end;
 
 procedure TViEngine.OnToggleFullscreen(aFullscreen: Boolean);

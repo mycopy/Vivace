@@ -38,33 +38,25 @@
 
 ============================================================================== }
 
-unit uTests;
+unit uCommon;
+
+{$I Vivace.Defines.inc}
 
 interface
 
-procedure RunTests;
-procedure WaitForEnter;
+uses
+  Vivace.Display;
+
+const
+  cArchiveFilename = 'Data.arc';
+
+  cDisplayWidth      = 800;
+  cDisplayHeight     = 480;
+  cDisplayFullscreen = False;
+  cDisplayAntiAlias  = True;
+  cDisplayVSync      = True;
+  cDisplayRenderAPI  = raDirect3D;
 
 implementation
-
-uses
-  uTest01,
-  uTest02;
-
-procedure WaitForEnter;
-begin
-  WriteLn;
-  Write('Press ENTER to continue...');
-  ReadLn;
-end;
-
-procedure RunTests;
-begin
-  //RunTest01;
-  RunTest02;
-end;
-
-initialization
-  ReportMemoryLeaksOnShutdown := True;
 
 end.

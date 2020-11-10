@@ -159,7 +159,7 @@ begin
       Exit;
     ViEngine.Display.ResetTarget;
     FBitmap.Draw(FPos.X + FHalf.X, FPos.Y + FHalf.Y, nil, @FCenter, nil, FAngle,
-      VIWHITE, False, False);
+      WHITE, False, False);
   end;
 
   FActive := aActive;

@@ -76,36 +76,36 @@ function ViColorFromAlColor(aColor: ALLEGRO_COLOR): TViColor; inline;
 {$REGION 'Common Colors'}
 
 var
-  VILIGHTGRAY: TViColor;
-  VIGRAY: TViColor;
-  VIDARKGRAY: TViColor;
-  VIYELLOW: TViColor;
-  VIGOLD: TViColor;
-  VIORANGE: TViColor;
-  VIPINK: TViColor;
-  VIRED: TViColor;
-  VIMAROON: TViColor;
-  VIGREEN: TViColor;
-  VILIME: TViColor;
-  VIDARKGREEN: TViColor;
-  VISKYBLUE: TViColor;
-  VIBLUE: TViColor;
-  VIDARKBLUE: TViColor;
-  VIPURPLE: TViColor;
-  VIVIOLET: TViColor;
-  VIDARKPURPLE: TViColor;
-  VIBEIGE: TViColor;
-  VIBROWN: TViColor;
-  VIDARKBROWN: TViColor;
-  VIWHITE: TViColor;
-  VIBLACK: TViColor;
-  VIBLANK: TViColor;
-  VIMEGENTA: TViColor;
-  VIWHITE2: TViColor;
-  VIRED2: TViColor;
-  VICOLORKEY: TViColor;
-  VIOVERLAY1: TViColor;
-  VIOVERLAY2: TViColor;
+  LIGHTGRAY: TViColor;
+  GRAY: TViColor;
+  DARKGRAY: TViColor;
+  YELLOW: TViColor;
+  GOLD: TViColor;
+  ORANGE: TViColor;
+  PINK: TViColor;
+  RED: TViColor;
+  MAROON: TViColor;
+  GREEN: TViColor;
+  LIME: TViColor;
+  DARKGREEN: TViColor;
+  SKYBLUE: TViColor;
+  BLUE: TViColor;
+  DARKBLUE: TViColor;
+  PURPLE: TViColor;
+  VIOLET: TViColor;
+  DARKPURPLE: TViColor;
+  BEIGE: TViColor;
+  BROWN: TViColor;
+  DARKBROWN: TViColor;
+  WHITE: TViColor;
+  BLACK: TViColor;
+  BLANK: TViColor;
+  MEGENTA: TViColor;
+  WHITE2: TViColor;
+  RED2: TViColor;
+  COLORKEY: TViColor;
+  OVERLAY1: TViColor;
+  OVERLAY2: TViColor;
 {$ENDREGION}
 
 implementation
