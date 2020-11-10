@@ -31,7 +31,7 @@ You just have to derive a new class from TviGame class and override a few callba
 ```pascal
 type
   { TMyGame }
-  TTemplate = class(TViGame)
+  TMyGame = class(TViGame)
   protected
     FConsoleFont: TViFont;
   public
@@ -118,5 +118,9 @@ begin
   FConsoleFont.Print(Pos.X, Pos.Y, 0, GREEN, alLeft,
     'Esc - Quit', [ViEngine.FrameRate]);
 end;
+```
+To run your game, call
+```pascal
+  ViRunGame(TMyGame);
 ```
 See the examples for more information on usage.
