@@ -27,7 +27,7 @@ It's robust, designed for easy, fast & fun use an suitable for making all types 
 
 ## A Tour of Vivace
 ### Game Object
-You just have to derive a new class from TviGame class and override a few callback methods.
+You just have to derive a new class from `TviGame` class and override a few callback methods.
 ```pascal
 type
   { TMyGame }
