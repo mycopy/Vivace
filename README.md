@@ -168,3 +168,12 @@ To run your game, call
   ViRunGame(TMyGame);
 ```
 See the examples for more information on usage.
+
+## Support
+
+Website: https://tinybiggames.com
+
+E-mail : support@tinybiggames.com
+
+[![Discord](https://img.shields.io/badge/chat-on_discord-7389D8.svg?logo=discord&logoColor=ffffff&labelColor=6A7EC2)](https://discord.gg/tPWjMwK)
+
