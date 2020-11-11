@@ -26,7 +26,7 @@ It's robust, designed for easy, fast & fun use an suitable for making all types 
 - Misc (screenshake, screenshot, starfied, colors)
 
 ## Minimum System Requirements
-- Delphi 2010 or higher
+- Delphi 10 or higher
 - Microsoft Windows 10
 - DirectX 9/OpenGL 3.3
 
