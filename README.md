@@ -174,7 +174,6 @@ See the examples for more information on usage.
 - A specific [release](https://github.com/tinyBigGAMES/Vivace/releases) version.
 
 ## Support
-Website: https://tinybiggames.com
-
+Website: https://tinybiggames.com  
 E-mail : support@tinybiggames.com
 
