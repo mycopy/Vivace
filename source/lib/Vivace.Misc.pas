@@ -38,25 +38,49 @@
 
 ============================================================================== }
 
-program TiledBitmap;
-
-{$APPTYPE CONSOLE}
+unit Vivace.Misc;
 
 {$I Vivace.Defines.inc}
 
-{$R *.res}
+interface
 
-uses
-  System.SysUtils,
-  Vivace.Game,
-  uTiledBitmap in 'uTiledBitmap.pas',
-  uCommon in 'uCommon.pas';
+procedure ViSmoothMove(var aValue: Single; aAmount: Single; aMax: Single;
+  aDrag: Single);
 
+
+implementation
+
+procedure ViSmoothMove(var aValue: Single; aAmount: Single; aMax: Single;
+  aDrag: Single);
+var
+  Amt: Single;
 begin
-  try
-    ViRunGame(TTiledBitmapDemo);
-  except
-    on E: Exception do
-      Writeln(E.ClassName, ': ', E.Message);
+  Amt := aAmount;
+
+  if Amt > 0 then
+  begin
+    aValue := aValue + Amt;
+    if aValue > aMax then
+      aValue := aMax;
+  end else if Amt < 0 then
+  begin
+    aValue := aValue + Amt;
+    if aValue < -aMax then
+      aValue := -aMax;
+  end else
+  begin
+    if aValue > 0 then
+    begin
+      aValue := aValue - aDrag;
+      if aValue < 0 then
+        aValue := 0;
+    end else if aValue < 0 then
+    begin
+      aValue := aValue + aDrag;
+      if aValue > 0 then
+        aValue := 0;
+    end;
   end;
+end;
+
 end.

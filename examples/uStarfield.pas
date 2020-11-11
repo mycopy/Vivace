@@ -201,7 +201,7 @@ begin
   inherited;
 
   FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
-    '1-6 - Change starfield', [ViEngine.FrameRate]);
+    '1-6         - Change starfield', [ViEngine.FrameRate]);
 end;
 
 end.

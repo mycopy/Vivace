@@ -38,7 +38,7 @@
 
 ============================================================================== }
 
-program TiledBitmap;
+program AstroBlaster;
 
 {$APPTYPE CONSOLE}
 
@@ -49,12 +49,13 @@ program TiledBitmap;
 uses
   System.SysUtils,
   Vivace.Game,
-  uTiledBitmap in 'uTiledBitmap.pas',
-  uCommon in 'uCommon.pas';
+  uAstroBlaster in 'uAstroBlaster.pas',
+  uCommon in 'uCommon.pas',
+  Vivace.Misc in '..\source\lib\Vivace.Misc.pas';
 
 begin
   try
-    ViRunGame(TTiledBitmapDemo);
+    ViRunGame(TAstroBlasterDemo);
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);

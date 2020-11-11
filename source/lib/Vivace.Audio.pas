@@ -50,6 +50,7 @@ uses
 
 const
   MAX_AUDIO_CHANNELS = 16;
+  AUDIO_PAN_NONE     = -1000.0;
 
 type
   { TViAudioSampleId }

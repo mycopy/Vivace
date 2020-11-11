@@ -226,9 +226,9 @@ begin
   inherited;
 
   FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
-    'S   - Spawn actors', [ViEngine.FrameRate]);
+    'S           - Spawn actors', [ViEngine.FrameRate]);
   FConsoleFont.Print(HudPos.X, HudPos.Y, 0, YELLOW, alLeft,
-    'Count: %d', [FScene.Lists[0].Count]);
+    'Count:        %d', [FScene.Lists[0].Count]);
 end;
 
 procedure TActorDemo.Spawn;

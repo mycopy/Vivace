@@ -30,6 +30,9 @@
         <Projects Include="..\examples\Video.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\examples\AstroBlaster.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -119,14 +122,23 @@
     <Target Name="Video:Make">
         <MSBuild Projects="..\examples\Video.dproj" Targets="Make"/>
     </Target>
+    <Target Name="AstroBlaster">
+        <MSBuild Projects="..\examples\AstroBlaster.dproj"/>
+    </Target>
+    <Target Name="AstroBlaster:Clean">
+        <MSBuild Projects="..\examples\AstroBlaster.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AstroBlaster:Make">
+        <MSBuild Projects="..\examples\AstroBlaster.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="viarc;vidump;Minimal;Starfield;TiledBitmap;Actor;Elastic;ChainAction;Video"/>
+        <CallTarget Targets="viarc;vidump;Minimal;Starfield;TiledBitmap;Actor;Elastic;ChainAction;Video;AstroBlaster"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="viarc:Clean;vidump:Clean;Minimal:Clean;Starfield:Clean;TiledBitmap:Clean;Actor:Clean;Elastic:Clean;ChainAction:Clean;Video:Clean"/>
+        <CallTarget Targets="viarc:Clean;vidump:Clean;Minimal:Clean;Starfield:Clean;TiledBitmap:Clean;Actor:Clean;Elastic:Clean;ChainAction:Clean;Video:Clean;AstroBlaster:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="viarc:Make;vidump:Make;Minimal:Make;Starfield:Make;TiledBitmap:Make;Actor:Make;Elastic:Make;ChainAction:Make;Video:Make"/>
+        <CallTarget Targets="viarc:Make;vidump:Make;Minimal:Make;Starfield:Make;TiledBitmap:Make;Actor:Make;Elastic:Make;ChainAction:Make;Video:Make;AstroBlaster:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

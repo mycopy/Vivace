@@ -196,7 +196,7 @@ begin
   inherited;
 
   FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
-    '1-4 - Video (%s)', [FFilename[FNum]]);
+    '1-4         - Video (%s)', [FFilename[FNum]]);
 
 end;
 

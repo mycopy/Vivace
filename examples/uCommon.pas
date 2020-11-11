@@ -207,11 +207,11 @@ begin
   FConsoleFont.Print(HudPos.X, HudPos.Y, 0, WHITE, alLeft,
     'fps %d', [ViEngine.FrameRate]);
   FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
-    'Esc - Quit', [ViEngine.FrameRate]);
+    'Esc         - Quit', [ViEngine.FrameRate]);
   FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
-    'F11 - Toggle fullscreen', [ViEngine.FrameRate]);
+    'F11         - Toggle fullscreen', [ViEngine.FrameRate]);
   FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
-    'F12 - Screenshot', [ViEngine.FrameRate]);
+    'F12         - Screenshot', [ViEngine.FrameRate]);
 
   // display hut footer
   LColor := ViColorMake(64,64,64,64);

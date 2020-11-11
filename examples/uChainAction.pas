@@ -492,7 +492,8 @@ var
 begin
   inherited;
 
-  ConsoleFont.Print(HudPos.X, HudPos.y, 0, YELLOW, alLeft, 'Circles: %d',
+  ConsoleFont.Print(HudPos.X, HudPos.y, 0, YELLOW, alLeft,
+    'Circles:      %d',
     [Scene[SCN_CIRCLE].Count]);
 
 
