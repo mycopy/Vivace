@@ -2,7 +2,7 @@
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/tinyBigGAMES/Vivace) ![GitHub contributors](https://img.shields.io/github/contributors/tinyBigGAMES/Vivace) ![GitHub stars](https://img.shields.io/github/stars/tinyBigGAMES/Vivace?style=social) ![GitHub forks](https://img.shields.io/github/forks/tinyBigGAMES/Vivace?style=social)
 
-![Twitter Follow](https://img.shields.io/twitter/follow/tinyBigGAMES?style=social) 
+![Twitter Follow](https://img.shields.io/twitter/follow/tinyBigGAMES?style=social) [![Discord](https://img.shields.io/badge/chat-on_discord-7389D8.svg?logo=discord&logoColor=ffffff&labelColor=6A7EC2)](https://discord.gg/tPWjMwK)
 
 # Welcome to Vivace
 Vivace&trade; (ve'va'CHe) Game Toolkit is an SDK to allow easy, fast & fun 2D game development in [Delphi](https://www.embarcadero.com/products/delphi) on desktop PC's running Microsoft Windows® and uses Direct3D® or OpenGL for hardware accelerated rendering.
@@ -170,13 +170,11 @@ To run your game, call
 See the examples for more information on usage.
 
 ## Download
-You can download the source code of the current development version from the [git repository](https://github.com/tinyBigGAMES/Vivace/archive/main.zip).
+- Current [development](https://github.com/tinyBigGAMES/Vivace/archive/main.zip) version.
+- A specific [release](https://github.com/tinyBigGAMES/Vivace/releases) version.
 
 ## Support
-
 Website: https://tinybiggames.com
 
 E-mail : support@tinybiggames.com
-
-[![Discord](https://img.shields.io/badge/chat-on_discord-7389D8.svg?logo=discord&logoColor=ffffff&labelColor=6A7EC2)](https://discord.gg/tPWjMwK)
 
