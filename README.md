@@ -30,7 +30,7 @@ It's robust, designed for easy, fast & fun use an suitable for making all types 
 - Microsoft Windows 10
 - DirectX 9/OpenGL 3.3
 
-## Installation
+## How to use in Delphi
 - Unzip the archive to a desired location.
 - Add `installdir\bin` to your windows search path so the `vivace.dll` can be found or place them in same location as your project.
 - Add `installdir\source\libs` to Delphi's library path so the toolkit source files can be found for any project or for a specific project add to projects search path.
