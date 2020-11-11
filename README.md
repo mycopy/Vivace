@@ -1,8 +1,8 @@
 ![](/images/logo.png)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/tinyBigGAMES/Vivace) ![GitHub contributors](https://img.shields.io/github/contributors/tinyBigGAMES/Vivace) ![GitHub stars](https://img.shields.io/github/stars/tinyBigGAMES/Vivace?style=social) ![GitHub forks](https://img.shields.io/github/forks/tinyBigGAMES/Vivace?style=social)
+![GitHub last commit](https://img.shields.io/github/last-commit/tinyBigGAMES/Vivace) ![GitHub contributors](https://img.shields.io/github/contributors/tinyBigGAMES/Vivace) ![GitHub stars](https://img.shields.io/github/stars/tinyBigGAMES/Vivace?style=social) ![GitHub forks](https://img.shields.io/github/forks/tinyBigGAMES/Vivace?style=social) [![License](https://img.shields.io/badge/license-zlib%2Flibpng-blue.svg)](LICENSE)
 
-![Twitter Follow](https://img.shields.io/twitter/follow/tinyBigGAMES?style=social) [![Discord](https://img.shields.io/badge/chat-on_discord-7389D8.svg?logo=discord&logoColor=ffffff&labelColor=6A7EC2)](https://discord.gg/tPWjMwK)
+![Twitter Follow](https://img.shields.io/twitter/follow/tinyBigGAMES?style=social) [![Chat on Discord](https://img.shields.io/discord/754884471324672040.svg?logo=discord)](https://discord.gg/tPWjMwK)
 
 # Welcome to Vivace
 Vivace&trade; (ve'va'CHe) Game Toolkit is an SDK to allow easy, fast & fun 2D game development in [Delphi](https://www.embarcadero.com/products/delphi) on desktop PC's running Microsoft Windows® and uses Direct3D® or OpenGL for hardware accelerated rendering.
