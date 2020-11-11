@@ -62,10 +62,9 @@ const
 type
 
   { TStarfieldDemo }
-  TStarfieldDemo = class(TViGame)
+  TStarfieldDemo = class(TCustomDemo)
   protected
     FStarfield: TViStarfield;
-    FConsoleFont: TViFont;
   public
     procedure OnLoad; override;
     procedure OnExit; override;
@@ -86,29 +85,21 @@ uses
 { --- TStarfieldDemo -------------------------------------------------------- }
 procedure TStarfieldDemo.OnLoad;
 begin
-  // mount archive file
-  ViEngine.Mount(cArchiveFilename);
+  inherited;
+  Title := cDisplayTitle;
 end;
 
 procedure TStarfieldDemo.OnExit;
 begin
-  // unmount archive file
-  ViEngine.Unmount(cArchiveFilename);
+  inherited;
 end;
 
 procedure TStarfieldDemo.OnStartup;
 begin
-  // open display
-  ViEngine.Display.Open(-1, -1, cDisplayWidth, cDisplayHeight,
-    cDisplayFullscreen, cDisplayVSync, cDisplayAntiAlias, cDisplayRenderAPI,
-    cDisplayTitle);
-
-  // create console font
-  FConsoleFont := ViFontLoadConsole(12);
+  inherited;
 
   // create starfield
   FStarfield := TViStarfield.Create;
-  FStarfield.Init(250, -1000, -1000, 10, 1000, 1000, 1000, 180);
 end;
 
 procedure TStarfieldDemo.OnShutdown;
@@ -116,18 +107,12 @@ begin
   // free starfield
   FreeAndNil(FStarfield);
 
-  // free console font
-  FreeAndNil(FConsoleFont);
-
-  // close display
-  ViEngine.Display.Close;
+  inherited;
 end;
 
 procedure TStarfieldDemo.OnUpdate(aTimer: TViTimer; aDeltaTime: Double);
 begin
-  // process input
-  if ViEngine.Input.KeyboardPressed(KEY_ESCAPE) then
-    ViEngine.Terminate := True;
+  inherited;
 
   // starfield #1
   if ViEngine.Input.KeyboardPressed(KEY_1) then
@@ -177,7 +162,6 @@ begin
   // starfield #6
   if ViEngine.Input.KeyboardPressed(KEY_6) then
   begin
-    FStarfield.Init(250, -1000, -1000, 10, 1000, 1000, 1000, 160);
     FStarfield.SetZSpeed(0);
     FStarfield.SetYSpeed(15*10);
   end;
@@ -185,7 +169,6 @@ begin
   // starfield #7
   if ViEngine.Input.KeyboardPressed(KEY_7) then
   begin
-    FStarfield.Init(250, -1000, -1000, 10, 1000, 1000, 1000, 180);
     FStarfield.SetXSpeed(0);
     FStarfield.SetYSpeed(0);
     FStarfield.SetZSpeed(-(5*25));
@@ -204,8 +187,7 @@ end;
 
 procedure TStarfieldDemo.OnShowDisplay;
 begin
-  // show display
-  ViEngine.Display.Show;
+  inherited;
 end;
 
 procedure TStarfieldDemo.OnRender;
@@ -215,18 +197,10 @@ begin
 end;
 
 procedure TStarfieldDemo.OnRenderGUI;
-var
-  Pos: TViVector;
 begin
-  // assign hud start pos
-  Pos.Assign(3,3);
+  inherited;
 
-  // display hud text
-  FConsoleFont.Print(Pos.X, Pos.Y, 0, WHITE, alLeft,
-    'fps %d', [ViEngine.FrameRate]);
-  FConsoleFont.Print(Pos.X, Pos.Y, 0, GREEN, alLeft,
-    'Esc - Quit', [ViEngine.FrameRate]);
-  FConsoleFont.Print(Pos.X, Pos.Y, 0, GREEN, alLeft,
+  FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
     '1-6 - Change starfield', [ViEngine.FrameRate]);
 end;
 

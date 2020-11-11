@@ -1,4 +1,4 @@
-﻿program TiledBitmap;
+﻿program ChainAction;
 
 {$APPTYPE CONSOLE}
 
@@ -7,12 +7,12 @@
 uses
   System.SysUtils,
   Vivace.Game,
-  uTiledBitmap in 'uTiledBitmap.pas',
-  uCommon in 'uCommon.pas';
+  uCommon in 'uCommon.pas',
+  uChainAction in 'uChainAction.pas';
 
 begin
   try
-    ViRunGame(TTiledBitmapDemo);
+    ViRunGame(TChainActionDemo);
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);

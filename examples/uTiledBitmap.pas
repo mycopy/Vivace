@@ -63,9 +63,8 @@ const
 type
 
   { TTiledBitmapDemo }
-  TTiledBitmapDemo = class(TViGame)
+  TTiledBitmapDemo = class(TCustomDemo)
   protected
-    FConsoleFont: TViFont;
     FTexture: array[0..3] of TViBitmap;
     FSpeed: array[0..3] of Single;
     FPos: array[0..3] of TViVector;
@@ -89,28 +88,20 @@ uses
 { --- TTiledBitmapDemo ------------------------------------------------------ }
 procedure TTiledBitmapDemo.OnLoad;
 begin
-  // mount archive file
-  ViEngine.Mount(cArchiveFilename);
+  inherited;
+  Title := cDisplayTitle;
 end;
 
 procedure TTiledBitmapDemo.OnExit;
 begin
-  // unmount archive file
-  ViEngine.Unmount(cArchiveFilename);
+  inherited;
 end;
 
 procedure TTiledBitmapDemo.OnStartup;
 var
   I: Integer;
 begin
-  // open display
-  ViEngine.Display.Open(-1, -1, cDisplayWidth, cDisplayHeight,
-    cDisplayFullscreen, cDisplayVSync, cDisplayAntiAlias, cDisplayRenderAPI,
-    cDisplayTitle);
-
-  // create console font
-  FConsoleFont := ViFontLoadConsole(12);
-
+  inherited;
 
   // Get bitmap interfaces
   for I := 0 to 3 do
@@ -143,20 +134,14 @@ begin
   for I := 0 to 3 do
     FreeAndNil(FTexture[I]);
 
-  // free console font
-  FreeAndNil(FConsoleFont);
-
-  // close display
-  ViEngine.Display.Close;
+  inherited;
 end;
 
 procedure TTiledBitmapDemo.OnUpdate(aTimer: TViTimer; aDeltaTime: Double);
 var
   I: Integer;
 begin
-  // process input
-  if ViEngine.Input.KeyboardPressed(KEY_ESCAPE) then
-    ViEngine.Terminate := True;
+  inherited;
 
   // update bitmap position
   for I := 0 to 3 do
@@ -173,14 +158,15 @@ end;
 
 procedure TTiledBitmapDemo.OnShowDisplay;
 begin
-  // show display
-  ViEngine.Display.Show;
+  inherited;
 end;
 
 procedure TTiledBitmapDemo.OnRender;
 var
   I: Integer;
 begin
+  inherited;
+
   // render bitmaps
   for i := 0 to 3 do
   begin
@@ -191,17 +177,8 @@ begin
 end;
 
 procedure TTiledBitmapDemo.OnRenderGUI;
-var
-  Pos: TViVector;
 begin
-  // assign hud start pos
-  Pos.Assign(3,3);
-
-  // display hud text
-  FConsoleFont.Print(Pos.X, Pos.Y, 0, WHITE, alLeft,
-    'fps %d', [ViEngine.FrameRate]);
-  FConsoleFont.Print(Pos.X, Pos.Y, 0, GREEN, alLeft,
-    'Esc - Quit', [ViEngine.FrameRate]);
+  inherited;
 end;
 
 end.

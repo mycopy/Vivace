@@ -49,7 +49,8 @@ program Actor;
 uses
   System.SysUtils,
   Vivace.Game,
-  uActor in 'uActor.pas';
+  uActor in 'uActor.pas',
+  uCommon in 'uCommon.pas';
 
 begin
   try

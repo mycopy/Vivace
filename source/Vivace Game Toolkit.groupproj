@@ -21,6 +21,15 @@
         <Projects Include="..\examples\Actor.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\examples\Elastic.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\ChainAction.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\Video.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -83,14 +92,41 @@
     <Target Name="Actor:Make">
         <MSBuild Projects="..\examples\Actor.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Elastic">
+        <MSBuild Projects="..\examples\Elastic.dproj"/>
+    </Target>
+    <Target Name="Elastic:Clean">
+        <MSBuild Projects="..\examples\Elastic.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Elastic:Make">
+        <MSBuild Projects="..\examples\Elastic.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ChainAction">
+        <MSBuild Projects="..\examples\ChainAction.dproj"/>
+    </Target>
+    <Target Name="ChainAction:Clean">
+        <MSBuild Projects="..\examples\ChainAction.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ChainAction:Make">
+        <MSBuild Projects="..\examples\ChainAction.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Video">
+        <MSBuild Projects="..\examples\Video.dproj"/>
+    </Target>
+    <Target Name="Video:Clean">
+        <MSBuild Projects="..\examples\Video.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Video:Make">
+        <MSBuild Projects="..\examples\Video.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="viarc;vidump;Minimal;Starfield;TiledBitmap;Actor"/>
+        <CallTarget Targets="viarc;vidump;Minimal;Starfield;TiledBitmap;Actor;Elastic;ChainAction;Video"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="viarc:Clean;vidump:Clean;Minimal:Clean;Starfield:Clean;TiledBitmap:Clean;Actor:Clean"/>
+        <CallTarget Targets="viarc:Clean;vidump:Clean;Minimal:Clean;Starfield:Clean;TiledBitmap:Clean;Actor:Clean;Elastic:Clean;ChainAction:Clean;Video:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="viarc:Make;vidump:Make;Minimal:Make;Starfield:Make;TiledBitmap:Make;Actor:Make"/>
+        <CallTarget Targets="viarc:Make;vidump:Make;Minimal:Make;Starfield:Make;TiledBitmap:Make;Actor:Make;Elastic:Make;ChainAction:Make;Video:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

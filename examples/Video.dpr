@@ -1,4 +1,4 @@
-﻿program TiledBitmap;
+﻿program Video;
 
 {$APPTYPE CONSOLE}
 
@@ -7,12 +7,11 @@
 uses
   System.SysUtils,
   Vivace.Game,
-  uTiledBitmap in 'uTiledBitmap.pas',
-  uCommon in 'uCommon.pas';
+  uVideo in 'uVideo.pas';
 
 begin
   try
-    ViRunGame(TTiledBitmapDemo);
+    ViRunGame(TVideoDemo);
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);

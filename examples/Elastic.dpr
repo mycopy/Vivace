@@ -1,4 +1,4 @@
-﻿program TiledBitmap;
+﻿program Elastic;
 
 {$APPTYPE CONSOLE}
 
@@ -7,12 +7,12 @@
 uses
   System.SysUtils,
   Vivace.Game,
-  uTiledBitmap in 'uTiledBitmap.pas',
+  uElastic in 'uElastic.pas',
   uCommon in 'uCommon.pas';
 
 begin
   try
-    ViRunGame(TTiledBitmapDemo);
+    ViRunGame(TElasticDemo);
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);

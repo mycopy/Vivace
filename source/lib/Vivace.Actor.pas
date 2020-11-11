@@ -201,6 +201,10 @@ type
     procedure OnRender; override;
   end;
 
+  { TViActorSceneEvent }
+  TViActorSceneEvent = procedure(aSceneNum: Integer) of object;
+
+
   { TViActorScene }
   TViActorScene = class(TViBaseObject)
   protected
@@ -219,7 +223,8 @@ type
     procedure Clear(aIndex: Integer; aAttrs: TViActorAttributeSet);
     procedure ClearAll;
     procedure Update(aAttrs: TViActorAttributeSet; aDeltaTime: Single);
-    procedure Render(aAttrs: TViActorAttributeSet);
+    procedure Render(aAttrs: TViActorAttributeSet; aBefore: TViActorSceneEvent;
+      aAfter: TViActorSceneEvent);
     function SendMessage(aAttrs: TViActorAttributeSet; aMsg: PViActorMessage; aBroadcast: Boolean): TViActor;
   end;
 
@@ -1172,13 +1177,18 @@ begin
   end;
 end;
 
-procedure TViActorScene.Render(aAttrs: TViActorAttributeSet);
+procedure TViActorScene.Render(aAttrs: TViActorAttributeSet;
+  aBefore: TViActorSceneEvent; aAfter: TViActorSceneEvent);
 var
   I: Integer;
 begin
   for I := 0 to FCount - 1 do
   begin
+    if Assigned(aBefore) then
+      aBefore(I);
     FLists[I].Render(aAttrs);
+    if Assigned(aAfter) then
+      aAfter(I);
   end;
 end;
 

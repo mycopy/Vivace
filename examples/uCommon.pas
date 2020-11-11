@@ -45,7 +45,18 @@ unit uCommon;
 interface
 
 uses
-  Vivace.Display;
+  Vivace.Allegro.API,
+  Vivace.Color,
+  Vivace.Math,
+  Vivace.Timer,
+  Vivace.Display,
+  Vivace.Input,
+  Vivace.Font,
+  Vivace.Font.Builtin,
+  Vivace.Game,
+  Vivace.Sprite,
+  Vivace.Actor,
+  Vivace.Engine;
 
 const
   cArchiveFilename = 'Data.arc';
@@ -57,6 +68,157 @@ const
   cDisplayVSync      = True;
   cDisplayRenderAPI  = raDirect3D;
 
+type
+
+  { TCustomDemo }
+  TCustomDemo = class(TViGame)
+  protected
+    FTitle: string;
+    FConsoleFont: TViFont;
+    FDefaultFont: TViFont;
+    FSprite: TViSprite;
+    FScene: TViActorScene;
+  public
+    HudPos: TViVector;
+    MousePos: TViVector;
+    property Title: string read FTitle write FTitle;
+    property ConsoleFont: TViFont read FConsoleFont write FConsoleFont;
+    property DefaultFont: TViFont read FDefaultFont write FDefaultFont;
+    property Sprite: TViSprite read FSprite;
+    property Scene: TViActorScene read FScene;
+    constructor Create; override;
+    destructor Destroy; override;
+    procedure OnLoad; override;
+    procedure OnExit; override;
+    procedure OnStartup; override;
+    procedure OnShutdown; override;
+    procedure OnUpdate(aTimer: TViTimer; aDeltaTime: Double); override;
+    procedure OnClearDisplay; override;
+    procedure OnShowDisplay; override;
+    procedure OnRender; override;
+    procedure OnRenderGUI; override;
+  end;
+
 implementation
+
+uses
+  System.SysUtils;
+
+{ --- TCustomDemo ----------------------------------------------------------- }
+constructor TCustomDemo.Create;
+begin
+  inherited;
+  FTitle := 'Vivace: Custom Demo';
+end;
+
+destructor TCustomDemo.Destroy;
+begin
+  inherited;
+end;
+
+procedure TCustomDemo.OnLoad;
+begin
+  // mount archive file
+  ViEngine.Mount(cArchiveFilename);
+end;
+
+procedure TCustomDemo.OnExit;
+begin
+  // unmount archive file
+  ViEngine.Unmount(cArchiveFilename);
+end;
+
+procedure TCustomDemo.OnStartup;
+begin
+  // open display
+  ViEngine.Display.Open(-1, -1, cDisplayWidth, cDisplayHeight,
+    cDisplayFullscreen, cDisplayVSync, cDisplayAntiAlias, cDisplayRenderAPI,
+    FTitle);
+
+  // create console font
+  FConsoleFont := ViFontLoadConsole(12);
+
+  // create sprite
+  FSprite := TViSprite.Create;
+
+  // create actor list
+  FScene := TViActorScene.Create;
+end;
+
+procedure TCustomDemo.OnShutdown;
+begin
+  // free actor list
+  FreeAndNil(FScene);
+
+  // free sprite
+  FreeAndNil(FSprite);
+
+  // free fonts
+  FreeAndNil(FDefaultFont);
+  FreeAndNil(FConsoleFont);
+
+  // close display
+  ViEngine.Display.Close;
+end;
+
+procedure TCustomDemo.OnUpdate(aTimer: TViTimer; aDeltaTime: Double);
+begin
+  // get mouse input
+  ViEngine.Input.MouseGetInfo(MousePos);
+
+  // ESC: quit
+  if ViEngine.Input.KeyboardPressed(KEY_ESCAPE) then
+    ViEngine.Terminate := True;
+
+  // F11: toggle fullscreen
+  if ViEngine.Input.KeyboardPressed(KEY_F11) then
+    ViEngine.Display.ToggleFullscreen;
+
+  // F12: screenshot
+  if ViEngine.Input.KeyboardPressed(KEY_F12) then
+    ViEngine.Screenshot.Take;
+end;
+
+procedure TCustomDemo.OnClearDisplay;
+begin
+  // clear display
+  ViEngine.Display.Clear(DARKGRAY);
+end;
+
+procedure TCustomDemo.OnShowDisplay;
+begin
+  // show display
+  ViEngine.Display.Show;
+end;
+
+procedure TCustomDemo.OnRender;
+begin
+end;
+
+procedure TCustomDemo.OnRenderGUI;
+var
+  LSize: TViRectangle;
+  LColor: TViColor;
+begin
+  // assign hud start pos
+  HudPos.Assign(3,3);
+
+  // display hud text
+  FConsoleFont.Print(HudPos.X, HudPos.Y, 0, WHITE, alLeft,
+    'fps %d', [ViEngine.FrameRate]);
+  FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
+    'Esc - Quit', [ViEngine.FrameRate]);
+  FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
+    'F11 - Toggle fullscreen', [ViEngine.FrameRate]);
+  FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
+    'F12 - Screenshot', [ViEngine.FrameRate]);
+
+  // display hut footer
+  LColor := ViColorMake(64,64,64,64);
+  ViEngine.Display.GetViewportSize(LSize);
+  LSize.X := LSize.Width / 2;
+  LSize.Y := (LSize.Height - FConsoleFont.GetLineHeight) - 3;
+  FConsoleFont.Print(LSize.X,  LSize.Y, LColor, alCenter, 'Vivace™ Game Toolkit', []);
+end;
 
 end.

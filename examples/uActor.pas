@@ -45,6 +45,7 @@ unit uActor;
 interface
 
 uses
+  Vivace.Allegro.API,
   Vivace.Color,
   Vivace.Math,
   Vivace.Timer,
@@ -80,10 +81,7 @@ type
   end;
 
   { TActorDemo }
-  TActorDemo = class(TViGame)
-  protected
-    FConsoleFont: TViFont;
-    FScene: TViActorScene;
+  TActorDemo = class(TCustomDemo)
   public
     procedure OnLoad; override;
     procedure OnExit; override;
@@ -166,28 +164,20 @@ end;
 { --- TActorDemo ------------------------------------------------------------ }
 procedure TActorDemo.OnLoad;
 begin
-  // mount archive file
-  ViEngine.Mount(cArchiveFilename);
+  inherited;
+  Title := cDisplayTitle;
 end;
 
 procedure TActorDemo.OnExit;
 begin
-  // unmount archive file
-  ViEngine.Unmount(cArchiveFilename);
+  inherited;
 end;
 
 procedure TActorDemo.OnStartup;
 begin
-  // open display
-  ViEngine.Display.Open(-1, -1, cDisplayWidth, cDisplayHeight,
-    cDisplayFullscreen, cDisplayVSync, cDisplayAntiAlias, cDisplayRenderAPI,
-    cDisplayTitle);
+  inherited;
 
-  // create console font
-  FConsoleFont := ViFontLoadConsole(12);
-
-  // create actor scene
-  FScene := TViActorScene.Create;
+  // allocate actor scenes
   FScene.Alloc(1);
 
   // add actor to scene
@@ -198,24 +188,13 @@ procedure TActorDemo.OnShutdown;
 begin
   // free actor scene
   FScene.ClearAll;
-  FreeAndNil(FScene);
 
-  // free console font
-  FreeAndNil(FConsoleFont);
-
-  // close display
-  ViEngine.Display.Close;
+  inherited;
 end;
 
 procedure TActorDemo.OnUpdate(aTimer: TViTimer; aDeltaTime: Double);
 begin
-  // quit game
-  if ViEngine.Input.KeyboardPressed(KEY_ESCAPE) then
-    ViEngine.Terminate := True;
-
-  // toggle fullscreen
-  if ViEngine.Input.KeyboardPressed(KEY_F11) then
-    ViEngine.Display.ToggleFullscreen;
+  inherited;
 
   // spawn new actors
   if ViEngine.Input.KeyboardPressed(KEY_S) then
@@ -233,33 +212,22 @@ end;
 
 procedure TActorDemo.OnShowDisplay;
 begin
-  // show display
-  ViEngine.Display.Show;
+  inherited;
 end;
 
 procedure TActorDemo.OnRender;
 begin
   // render scene
-  FScene.Render([])
+  FScene.Render([], nil, nil);
 end;
 
 procedure TActorDemo.OnRenderGUI;
-var
-  Pos: TViVector;
 begin
-  // assign hud start pos
-  Pos.Assign(3,3);
+  inherited;
 
-  // display hud text
-  FConsoleFont.Print(Pos.X, Pos.Y, 0, WHITE, alLeft,
-    'fps %d', [ViEngine.FrameRate]);
-  FConsoleFont.Print(Pos.X, Pos.Y, 0, GREEN, alLeft,
-    'Esc - Quit', [ViEngine.FrameRate]);
-  FConsoleFont.Print(Pos.X, Pos.Y, 0, GREEN, alLeft,
-    'F11 - Toogle fullscreen', [ViEngine.FrameRate]);
-  FConsoleFont.Print(Pos.X, Pos.Y, 0, GREEN, alLeft,
+  FConsoleFont.Print(HudPos.X, HudPos.Y, 0, GREEN, alLeft,
     'S   - Spawn actors', [ViEngine.FrameRate]);
-  FConsoleFont.Print(Pos.X, Pos.Y, 0, YELLOW, alLeft,
+  FConsoleFont.Print(HudPos.X, HudPos.Y, 0, YELLOW, alLeft,
     'Count: %d', [FScene.Lists[0].Count]);
 end;
 

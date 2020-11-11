@@ -514,10 +514,16 @@ end;
 
 function  TViEntity.Overlap(aEntity: TViEntity): Boolean;
 begin
+  (*
   with aEntity do
   begin
     Result := Overlap(FPos.X, FPos.Y, FRadius, FShrinkFactor);
   end;
+  *)
+
+  Result := Overlap(aEntity.GetPos.X, aEntity.GetPos.Y, aEntity.GetRadius,
+    aEntity.GetShrinkFactor);
+
 end;
 
 procedure TViEntity.Render(aVirtualX: Single; aVirtualY: Single);
