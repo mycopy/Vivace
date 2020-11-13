@@ -33,6 +33,33 @@
         <Projects Include="..\examples\AstroBlaster.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\examples\Viewports.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\RotateViewport.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\Bitmap.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\Entity.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\EntityCollision.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\EntityCollisionPoint.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\AudioStream.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\AudioSample.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\examples\Speech.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -131,14 +158,95 @@
     <Target Name="AstroBlaster:Make">
         <MSBuild Projects="..\examples\AstroBlaster.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Viewports">
+        <MSBuild Projects="..\examples\Viewports.dproj"/>
+    </Target>
+    <Target Name="Viewports:Clean">
+        <MSBuild Projects="..\examples\Viewports.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Viewports:Make">
+        <MSBuild Projects="..\examples\Viewports.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RotateViewport">
+        <MSBuild Projects="..\examples\RotateViewport.dproj"/>
+    </Target>
+    <Target Name="RotateViewport:Clean">
+        <MSBuild Projects="..\examples\RotateViewport.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RotateViewport:Make">
+        <MSBuild Projects="..\examples\RotateViewport.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Bitmap">
+        <MSBuild Projects="..\examples\Bitmap.dproj"/>
+    </Target>
+    <Target Name="Bitmap:Clean">
+        <MSBuild Projects="..\examples\Bitmap.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Bitmap:Make">
+        <MSBuild Projects="..\examples\Bitmap.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Entity">
+        <MSBuild Projects="..\examples\Entity.dproj"/>
+    </Target>
+    <Target Name="Entity:Clean">
+        <MSBuild Projects="..\examples\Entity.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Entity:Make">
+        <MSBuild Projects="..\examples\Entity.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="EntityCollision">
+        <MSBuild Projects="..\examples\EntityCollision.dproj"/>
+    </Target>
+    <Target Name="EntityCollision:Clean">
+        <MSBuild Projects="..\examples\EntityCollision.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="EntityCollision:Make">
+        <MSBuild Projects="..\examples\EntityCollision.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="EntityCollisionPoint">
+        <MSBuild Projects="..\examples\EntityCollisionPoint.dproj"/>
+    </Target>
+    <Target Name="EntityCollisionPoint:Clean">
+        <MSBuild Projects="..\examples\EntityCollisionPoint.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="EntityCollisionPoint:Make">
+        <MSBuild Projects="..\examples\EntityCollisionPoint.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="AudioStream">
+        <MSBuild Projects="..\examples\AudioStream.dproj"/>
+    </Target>
+    <Target Name="AudioStream:Clean">
+        <MSBuild Projects="..\examples\AudioStream.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AudioStream:Make">
+        <MSBuild Projects="..\examples\AudioStream.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="AudioSample">
+        <MSBuild Projects="..\examples\AudioSample.dproj"/>
+    </Target>
+    <Target Name="AudioSample:Clean">
+        <MSBuild Projects="..\examples\AudioSample.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AudioSample:Make">
+        <MSBuild Projects="..\examples\AudioSample.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Speech">
+        <MSBuild Projects="..\examples\Speech.dproj"/>
+    </Target>
+    <Target Name="Speech:Clean">
+        <MSBuild Projects="..\examples\Speech.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Speech:Make">
+        <MSBuild Projects="..\examples\Speech.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="viarc;vidump;Minimal;Starfield;TiledBitmap;Actor;Elastic;ChainAction;Video;AstroBlaster"/>
+        <CallTarget Targets="viarc;vidump;Minimal;Starfield;TiledBitmap;Actor;Elastic;ChainAction;Video;AstroBlaster;Viewports;RotateViewport;Bitmap;Entity;EntityCollision;EntityCollisionPoint;AudioStream;AudioSample;Speech"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="viarc:Clean;vidump:Clean;Minimal:Clean;Starfield:Clean;TiledBitmap:Clean;Actor:Clean;Elastic:Clean;ChainAction:Clean;Video:Clean;AstroBlaster:Clean"/>
+        <CallTarget Targets="viarc:Clean;vidump:Clean;Minimal:Clean;Starfield:Clean;TiledBitmap:Clean;Actor:Clean;Elastic:Clean;ChainAction:Clean;Video:Clean;AstroBlaster:Clean;Viewports:Clean;RotateViewport:Clean;Bitmap:Clean;Entity:Clean;EntityCollision:Clean;EntityCollisionPoint:Clean;AudioStream:Clean;AudioSample:Clean;Speech:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="viarc:Make;vidump:Make;Minimal:Make;Starfield:Make;TiledBitmap:Make;Actor:Make;Elastic:Make;ChainAction:Make;Video:Make;AstroBlaster:Make"/>
+        <CallTarget Targets="viarc:Make;vidump:Make;Minimal:Make;Starfield:Make;TiledBitmap:Make;Actor:Make;Elastic:Make;ChainAction:Make;Video:Make;AstroBlaster:Make;Viewports:Make;RotateViewport:Make;Bitmap:Make;Entity:Make;EntityCollision:Make;EntityCollisionPoint:Make;AudioStream:Make;AudioSample:Make;Speech:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

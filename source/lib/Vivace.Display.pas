@@ -161,7 +161,7 @@ type
     procedure DrawCircle(aX: Single; aY: Single; aRadius: Single;
       aThickness: Single; aColor: TViColor);
     procedure DrawFilledCircle(aX: Single; aY: Single; aRadius: Single;
-      aColor: TColor);
+      aColor: TViColor);
 
     procedure DrawPolygon(aVertices: System.PSingle; aVertexCount: Integer;
       aThickness: Single; aColor: TViColor);
@@ -487,7 +487,7 @@ begin
 end;
 
 procedure TViDisplay.DrawFilledCircle(aX: Single; aY: Single; aRadius: Single;
-  aColor: TColor);
+  aColor: TViColor);
 var
   color: ALLEGRO_COLOR absolute aColor;
 begin

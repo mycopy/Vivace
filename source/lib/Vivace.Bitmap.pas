@@ -85,6 +85,9 @@ type
       aCenter: PViVector; aScale: PViVector; aAngle: Single; aColor: TViColor;
       aHFlip: Boolean; aVFlip: Boolean);
 
+    procedure DrawCentered(aX: Single; aY: Single; aScale: Single;
+      aAngle: Single; aColor: TViColor);
+
     procedure DrawTiled(aDeltaX: Single; aDeltaY: Single);
   end;
 
@@ -94,6 +97,9 @@ uses
   System.SysUtils,
   System.Math,
   Vivace.Engine;
+
+var
+  mCentered: TViVector = (X:0.5; Y:0.5; Z:0.0);
 
 { --- TViBitmap ------------------------------------------------------------- }
 procedure TViBitmap.Allocate(aWidth, aHeight: Integer);
@@ -213,6 +219,17 @@ begin
   al_draw_tinted_scaled_rotated_bitmap_region(FHandle, rg.X, rg.Y, rg.Width,
     rg.Height, c, cp.X, cp.Y, aX, aY, sc.X, sc.Y, a, flags);
 end;
+
+procedure TViBitmap.DrawCentered(aX: Single; aY: Single; aScale: Single; aAngle: Single;
+  aColor: TViColor);
+var
+  Scale: TViVector;
+begin
+  Scale.Assign(aScale, aScale);
+  Draw(aX, aY, nil, @mCentered, @Scale, aAngle, aColor,
+    False, False);
+end;
+
 
 procedure TViBitmap.DrawTiled(aDeltaX: Single; aDeltaY: Single);
 var
